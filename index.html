@@ -111,23 +111,29 @@ p:last-child{margin-bottom:0}
 .properties{background:var(--gray)}
 .prop-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .prop img{width:100%}
-.prop .exterior{height:clamp(150px,17vw,240px);object-fit:cover}
+.prop .exterior{width:100%;height:auto;aspect-ratio:546/340;object-fit:cover;object-position:50% 100%}
 .prop-panel{background:var(--teal-panel);color:var(--white);padding:clamp(30px,3.6vw,52px) clamp(20px,3vw,42px)}
 .prop-panel .lockup{width:min(300px,74%);margin:0 auto clamp(24px,3vw,40px)}
-table.spec{width:100%;max-width:400px;margin-inline:auto;border-collapse:collapse;font-size:13px}
+table.spec{width:100%;max-width:400px;margin-inline:auto;border-collapse:collapse;font-size:14px}
 table.spec th,table.spec td{
   text-align:left;padding:9px 0 8px;vertical-align:top;
   border-bottom:1px solid rgba(255,255,255,.42);
 }
-table.spec th{font-weight:600;letter-spacing:.045em;text-transform:uppercase;font-size:11px;width:42%;padding-right:14px}
+table.spec th{
+  font-weight:600;letter-spacing:.045em;text-transform:uppercase;font-size:12px;
+  width:42%;padding-right:14px;vertical-align:middle;
+}
 table.spec td{font-weight:300}
 table.spec tr:last-child th,table.spec tr:last-child td{border-bottom:0}
+table.spec tr{transition:background-color .18s ease}
+table.spec tr:hover{background:rgba(255,255,255,.14)}
+@media (prefers-reduced-motion:reduce){table.spec tr{transition:none}}
 .prop-pair{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
 .prop-pair img{height:clamp(96px,11vw,160px);object-fit:cover;width:100%}
 .prop-room{margin-top:8px}
 .prop-room img{height:clamp(150px,17vw,240px);object-fit:cover;width:100%}
 .prop-cap{
-  background:var(--teal-panel);color:var(--white);text-align:center;
+  margin-top:8px;background:var(--teal-panel);color:var(--white);text-align:center;
   padding:15px 12px;font-size:11.5px;font-weight:600;letter-spacing:.075em;text-transform:uppercase;
 }
 
@@ -284,7 +290,7 @@ footer{background:var(--footer);color:rgba(255,255,255,.88);padding-block:clamp(
 
       <article class="prop">
         <img class="exterior" src="assets/shs-exterior.webp" width="1600" height="1067" loading="lazy"
-             alt="SpringHill Suites Dallas Rockwall exterior and porte-cochère at dusk" data-roll>
+             alt="SpringHill Suites Dallas Rockwall exterior and porte-cochère at dusk">
         <div class="prop-panel">
           <img class="lockup" src="assets/logo-shs-white.svg" alt="SpringHill Suites Dallas Rockwall">
           <table class="spec">
@@ -316,13 +322,13 @@ footer{background:var(--footer);color:rgba(255,255,255,.88);padding-block:clamp(
 
       <article class="prop">
         <img class="exterior" src="assets/tps-exterior.webp" width="1600" height="1068" loading="lazy"
-             alt="TownePlace Suites Dallas Rockwall exterior and entrance at dusk" data-roll>
+             alt="TownePlace Suites Dallas Rockwall exterior and entrance at dusk">
         <div class="prop-panel">
           <img class="lockup" src="assets/logo-tps-white.svg" alt="TownePlace Suites Dallas Rockwall">
           <table class="spec">
             <caption class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">TownePlace Suites Dallas Rockwall property summary</caption>
             <tbody>
-              <tr><th scope="row">Property Address</th><td>908 E Interstate 30 Frontage Road<br>Rockwall, TX 75087</td></tr>
+              <tr><th scope="row">Property Address</th><td>908 E Interstate 30 Frontage Rd<br>Rockwall, TX 75087</td></tr>
               <tr><th scope="row">Keys</th><td>112</td></tr>
               <tr><th scope="row">Year Built</th><td>2022</td></tr>
               <tr><th scope="row">Stories</th><td>4</td></tr>
