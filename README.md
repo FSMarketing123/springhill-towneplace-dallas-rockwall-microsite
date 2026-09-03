@@ -36,6 +36,36 @@ errors present in the original are preserved deliberately:
 - "These large and unique investment opportunities highlight the types of opportunities
   Rockwall is expected to continue its trend of high growth." (garbled in the original)
 
+## Scale
+
+The original Squarespace build was authored at a **2479px viewport** with proportional
+sizing — confirmed by matching the button height in the capture (66px) against a real
+button. The first rebuild used fixed pixel caps, so on wide displays it stopped growing
+and read as undersized: the content column held at 1100px where the original was 1526px
+(61.6vw), and section padding capped at 104px where the original used 222px.
+
+Sizing is now fluid, with ratios measured off that capture. At a 2479px viewport every
+value lands within 1px of the original:
+
+| Token | Original | Rebuild | CSS |
+|---|---|---|---|
+| Content column | 1526 | 1527 | `min(calc(100% - 48px), max(1100px, 61.6vw), 1720px)` |
+| Text measure | 1267 | 1267 | `min(calc((100% - 48px)*.83), max(913px, 51.1vw), 1428px)` |
+| Hero height | 1367 | 1363 | `max(min(60vh, 620px), min(55vw, 100vh))` |
+| Hero lockup | 1082 | 1081 | `clamp(300px, 43.6vw, 1100px)` |
+| Masthead logo | 182 | 181 | `clamp(118px, 7.3vw, 190px)` |
+| Button | 438 × 74 | 439 × 74 | `min-width:clamp(270px, 17.7vw, 440px)` |
+| Footer logo | 254 | 253 | `clamp(180px, 10.2vw, 260px)` |
+| Body line-height | 30 | 30 | `clamp(16px, calc(14.6px + .096vw), 18px)` / 1.76 |
+| Section padding | 222 | 221 | `--pad: clamp(48px, 8.9vw, 226px)` |
+
+Floors keep small screens sane — at 375px the column is 327px, the hero 487px, and the
+body stays at 16px. Nothing changes at 1440px, which is where the earlier caps already sat.
+
+Note `.wrap` and `.narrow` share one element, so a bare percentage on `.narrow` would
+resolve against the section rather than the column. The measure mirrors the `.wrap`
+expression scaled to 83% instead.
+
 ## Parallax
 
 Scroll-driven, no library. One rAF-batched handler, viewport-culled by IntersectionObserver.

@@ -26,8 +26,11 @@
   --footer:#474546;
   --body:#454545;
   --white:#fff;
-  --measure:74ch;
-  --pad:clamp(48px,7vw,104px);
+  /* Fluid scale. The original Squarespace build was authored at a 2479px viewport
+     with proportional sizing; these ratios are measured from that capture:
+     content column 61.6vw, section padding 8.9vw, body 17px, hero lockup 43.6vw. */
+  --measure:83%;
+  --pad:clamp(48px,8.9vw,226px);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -35,7 +38,8 @@ html{scroll-behavior:smooth}
 body{
   margin:0;background:var(--gray);color:var(--body);
   font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
-  font-weight:300;font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased;
+  font-weight:300;font-size:clamp(16px,calc(14.6px + 0.096vw),18px);line-height:1.76;
+  -webkit-font-smoothing:antialiased;
 }
 img{max-width:100%;height:auto;display:block}
 
@@ -49,18 +53,19 @@ img{max-width:100%;height:auto;display:block}
 }
 a{color:inherit}
 strong,b{font-weight:600}
-.wrap{width:min(1100px,calc(100% - 48px));margin-inline:auto}
-.narrow{max-width:var(--measure);margin-inline:auto}
+.wrap{width:min(calc(100% - 48px),max(1100px,61.6vw),1720px);margin-inline:auto}
+.narrow{max-width:min(calc((100% - 48px)*.83),max(913px,51.1vw),1428px);margin-inline:auto}  /* .wrap and .narrow share an element, so a bare % would resolve against the
+     section rather than the column — mirror the .wrap expression at 83% instead. */
 section{padding-block:var(--pad)}
 h1,h2,h3{font-weight:600;line-height:1.25;color:var(--navy);margin:0 0 .9em}
-h2{font-size:clamp(20px,2.1vw,25px)}
-h3{font-size:clamp(17px,1.7vw,20px)}
+h2{font-size:clamp(20px,1.15vw,30px)}
+h3{font-size:clamp(17px,0.95vw,24px)}
 p{margin:0 0 1.15em}
 p:last-child{margin-bottom:0}
 
 /* ---------- hero ---------- */
 .hero{
-  position:relative;min-height:min(88vh,720px);padding:0;
+  position:relative;min-height:max(min(60vh,620px),min(55vw,100vh));padding:0;
   display:grid;place-items:center;overflow:hidden;background:#2f4d65;
 }
 .hero-bg{
@@ -78,8 +83,8 @@ p:last-child{margin-bottom:0}
   display:flex;align-items:center;gap:22px;
 }
 .hero-mast .rule{flex:1;height:1px;background:rgba(255,255,255,.62)}
-.hero-mast img{width:118px;flex:none}
-.hero-lockup{position:relative;z-index:2;width:min(540px,74vw);padding:0 24px}
+.hero-mast img{width:clamp(118px,7.3vw,190px);height:auto;flex:none}
+.hero-lockup{position:relative;z-index:2;width:clamp(300px,43.6vw,1100px);padding:0 24px}
 
 /* ---------- overview ---------- */
 .overview{background:var(--gray);text-align:center}
@@ -90,9 +95,9 @@ p:last-child{margin-bottom:0}
 }
 .btn{
   display:inline-flex;align-items:center;justify-content:center;
-  min-width:270px;padding:19px 30px;
+  min-width:clamp(270px,17.7vw,440px);padding:clamp(19px,1.45vw,25px) clamp(30px,2vw,40px);
   background:var(--teal);color:var(--white);
-  font-size:13.5px;font-weight:500;letter-spacing:.01em;text-decoration:none;
+  font-size:clamp(13.5px,.56vw,15px);font-weight:500;letter-spacing:.01em;text-decoration:none;
   box-shadow:0 2px 10px rgba(0,0,0,.14);
   transition:background .2s ease,transform .2s ease;
 }
@@ -142,7 +147,7 @@ table.spec tr:last-child th,table.spec tr:last-child td{border-bottom:0}
   padding:22px clamp(36px,5vw,72px);
 }
 .divider h2{
-  margin:0;color:var(--white);font-size:clamp(24px,3.1vw,40px);font-weight:600;
+  margin:0;color:var(--white);font-size:clamp(24px,2.26vw,56px);font-weight:600;
   text-shadow:0 1px 12px rgba(0,0,0,.22);
 }
 
@@ -203,7 +208,7 @@ table.spec tr:last-child th,table.spec tr:last-child td{border-bottom:0}
 .cta-close{background:var(--teal);text-align:center}
 footer{background:var(--footer);color:rgba(255,255,255,.88);padding-block:clamp(56px,7vw,104px);font-size:13.5px}
 .foot-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,5vw,72px);align-items:center}
-.foot-logo{width:min(210px,62%);margin-inline:auto}
+.foot-logo{width:clamp(180px,10.2vw,260px);margin-inline:auto}
 .foot-head{
   font-size:12.5px;letter-spacing:.11em;text-transform:uppercase;font-weight:400;
   color:#fff;border-bottom:1px solid rgba(255,255,255,.45);
