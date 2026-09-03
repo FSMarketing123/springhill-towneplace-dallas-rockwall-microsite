@@ -103,6 +103,18 @@ p:last-child{margin-bottom:0}
 }
 .btn:hover,.btn:focus-visible{background:#54798c;transform:translateY(-1px)}
 
+/* ---------- justified copy ----------
+   Intro is a centre-composed block, so its last lines stay centred; plain justify
+   would leave them (and the one-line third paragraph) flush left. */
+.overview .narrow p{
+  text-align:justify;text-align-last:center;
+  hyphens:auto;-webkit-hyphens:auto;
+}
+#hl-submarket p,.panel-teal p,.panel-white p{
+  text-align:justify;
+  hyphens:auto;-webkit-hyphens:auto;   /* narrow panels open big word gaps without it */
+}
+
 /* ---------- full-bleed band ---------- */
 .band{overflow:hidden}
 .band img{width:100%;height:clamp(320px,50vw,1250px);object-fit:cover}
