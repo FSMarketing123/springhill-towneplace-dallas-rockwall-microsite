@@ -80,7 +80,11 @@ whose container already clips.
 | Communal table band | `.band img` | 40 → 0 |
 | Harbor aerial divider | `.divider img` | 0 → 40 |
 | Ballard / Chocxo renderings | `.dev-media img` | 0 → 12 |
-| Both infographics | `.fig img` | 0 → 12 |
+
+The two infographics deliberately carry **no** zoom. They have text baked into the raster,
+and scaling them inside a clipping figure cropped the top and bottom edges off — 34px on the
+Dallas skyline graphic, 25px on the concentrations graphic. `.fig` no longer clips and the
+images are capped at `max-width:100%; max-height:100%`.
 
 **Roller** (`object-position`) — on all 18 `object-fit: cover` images. This slides the crop
 window *inside* the image's own box, so the element never changes size and cannot overlap a

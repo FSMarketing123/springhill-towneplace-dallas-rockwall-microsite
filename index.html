@@ -95,19 +95,17 @@ p:last-child{margin-bottom:0}
 }
 .btn{
   display:inline-flex;align-items:center;justify-content:center;
-  min-width:clamp(270px,17.7vw,440px);padding:clamp(19px,1.45vw,25px) clamp(30px,2vw,40px);
+  width:clamp(320px,17.7vw,440px);padding:clamp(19px,1.45vw,25px) clamp(30px,2vw,40px);
   background:var(--teal);color:var(--white);
   font-size:clamp(13.5px,.56vw,15px);font-weight:500;letter-spacing:.01em;text-decoration:none;
   box-shadow:0 2px 10px rgba(0,0,0,.14);
   transition:background .2s ease,transform .2s ease;
 }
 .btn:hover,.btn:focus-visible{background:#54798c;transform:translateY(-1px)}
-.btn-light{background:var(--white);color:var(--teal)}
-.btn-light:hover,.btn-light:focus-visible{background:#f0f4f6}
 
 /* ---------- full-bleed band ---------- */
 .band{overflow:hidden}
-.band img{width:100%;height:clamp(260px,38vw,620px);object-fit:cover}
+.band img{width:100%;height:clamp(320px,50vw,1250px);object-fit:cover}
 
 /* ---------- properties ---------- */
 .properties{background:var(--gray)}
@@ -136,7 +134,7 @@ table.spec tr:last-child th,table.spec tr:last-child td{border-bottom:0}
 /* ---------- highlights divider ---------- */
 .divider{
   position:relative;display:grid;place-items:center;padding:0;overflow:hidden;
-  min-height:clamp(320px,40vw,600px);
+  min-height:clamp(340px,45.3vw,1130px);
 }
 .divider img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .divider .plate{
@@ -153,7 +151,8 @@ table.spec tr:last-child th,table.spec tr:last-child td{border-bottom:0}
 
 /* ---------- highlight layouts ---------- */
 .hl-split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,72px);align-items:center}
-.fig{margin:0;overflow:hidden}
+.fig{margin:0}
+.fig img{max-width:100%;max-height:100%;height:auto}
 .sec-light{background:var(--offwhite)}
 .sec-gray{background:var(--gray)}
 .sec-teal{background:var(--teal)}
@@ -205,7 +204,7 @@ table.spec tr:last-child th,table.spec tr:last-child td{border-bottom:0}
 .alt .panel-white h3{color:var(--teal)}
 
 /* ---------- footer ---------- */
-.cta-close{background:var(--teal);text-align:center}
+.cta-close{background:var(--gray);text-align:center}
 footer{background:var(--footer);color:rgba(255,255,255,.88);padding-block:clamp(56px,7vw,104px);font-size:13.5px}
 .foot-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,5vw,72px);align-items:center}
 .foot-logo{width:clamp(180px,10.2vw,260px);margin-inline:auto}
@@ -232,7 +231,7 @@ footer{background:var(--footer);color:rgba(255,255,255,.88);padding-block:clamp(
 @media (max-width:760px){
   .prop-grid{grid-template-columns:1fr;gap:34px}
   .brand-grid{grid-template-columns:repeat(3,1fr)}
-  .btn{min-width:0;width:100%;max-width:340px}
+  .btn{width:100%;max-width:340px}
   .cta-row{gap:16px}
 }
 @media (max-width:460px){
@@ -367,7 +366,7 @@ footer{background:var(--footer);color:rgba(255,255,255,.88);padding-block:clamp(
     </div>
     <figure class="fig">
       <img src="assets/infographic-concentrations.webp" width="1400" height="1150" loading="lazy"
-           alt="Professional concentrations of Rockwall residents versus the national average: architecture and engineering 109% higher, legal 94% higher, sales 58% higher, management 48% higher. Source: Data USA 2022." data-px>
+           alt="Professional concentrations of Rockwall residents versus the national average: architecture and engineering 109% higher, legal 94% higher, sales 58% higher, management 48% higher. Source: Data USA 2022.">
     </figure>
   </div>
 </section>
@@ -495,7 +494,7 @@ footer{background:var(--footer);color:rgba(255,255,255,.88);padding-block:clamp(
     </div>
     <figure class="fig">
       <img src="assets/infographic-dfw.webp" width="2400" height="1235" loading="lazy"
-           alt="Dallas skyline infographic: #1 MSA in the U.S. for job recovery beyond pre-pandemic high (Bureau of Labor Statistics, 2023); 4th largest metro in the U.S.; #6 of 500 most innovative cities in the world (2thinknow, 2021); more people live in DFW than in 39 states (D Magazine, 2022); 23 Fortune 500 company headquarters (Fortune, 2023); visited by 68.4 million tourists each year (VisitDallas.com, 2023); DFW gained more people over the past decade than any other U.S. metro (U.S. Census Bureau, 2022); 3 Global 50 companies, second most in the world (Bureau of Labor Statistics, 2023); #2 metro in the country for job growth (Bureau of Labor Statistics, 2023); 3rd busiest airport in the world (Airports Council International, 2023)." data-px>
+           alt="Dallas skyline infographic: #1 MSA in the U.S. for job recovery beyond pre-pandemic high (Bureau of Labor Statistics, 2023); 4th largest metro in the U.S.; #6 of 500 most innovative cities in the world (2thinknow, 2021); more people live in DFW than in 39 states (D Magazine, 2022); 23 Fortune 500 company headquarters (Fortune, 2023); visited by 68.4 million tourists each year (VisitDallas.com, 2023); DFW gained more people over the past decade than any other U.S. metro (U.S. Census Bureau, 2022); 3 Global 50 companies, second most in the world (Bureau of Labor Statistics, 2023); #2 metro in the country for job growth (Bureau of Labor Statistics, 2023); 3rd busiest airport in the world (Airports Council International, 2023).">
     </figure>
   </div>
 </section>
@@ -527,8 +526,8 @@ footer{background:var(--footer);color:rgba(255,255,255,.88);padding-block:clamp(
 <section class="cta-close" id="cta">
   <div class="wrap cta-row" style="margin-top:0">
     <!-- TODO: Confidentiality Agreement URLs pending from HWE -->
-    <a class="btn btn-light" href="#">Sign Confidentiality Agreement</a>
-    <a class="btn btn-light" href="#">Download Confidentiality Agreement</a>
+    <a class="btn" href="#">Sign Confidentiality Agreement</a>
+    <a class="btn" href="#">Download Confidentiality Agreement</a>
   </div>
 </section>
 
