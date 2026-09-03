@@ -15,7 +15,7 @@
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --teal:#64899c;
@@ -153,6 +153,88 @@ table.spec tr:hover{background:rgba(255,255,255,.14)}
 .divider h2{
   margin:0;color:var(--white);font-size:clamp(24px,2.26vw,56px);font-weight:600;
   text-shadow:0 1px 12px rgba(0,0,0,.22);
+}
+
+/* ---------- concentrations graphic (rebuilt from the source artwork) ----------
+   Every dimension below is measured off Rockwall-Residence-graphx.png (4951px wide)
+   and expressed in cqw, so 1cqw = 1% of the figure's width and the whole graphic
+   scales exactly as the raster did. Source: card 10.62cqw tall, card gap 5.27,
+   icon 8.95 square, bar 4.05 tall, baseline bar 8.40 wide, longest bar 17.35.
+   Bars are to scale: the white bar is the national average (1.00x), the teal bar
+   is Rockwall's level, so +109% draws at 2.09x the baseline. */
+.conc-wrap{container-type:inline-size;width:100%}
+.conc{
+  margin:0;background:var(--teal);color:#fff;
+  padding:3.19cqw 2.65cqw 1.68cqw;border-radius:1.3cqw;
+  box-shadow:0 2px 18px rgba(0,0,0,.10);
+}
+.conc-title{
+  margin:0 0 2.4cqw;text-align:center;color:#fff;
+  font-size:clamp(14px,5.4cqw,38px);line-height:1.02;font-weight:500;letter-spacing:-.005em;
+  text-transform:uppercase;
+}
+.conc-rows{list-style:none;margin:0;padding:0;display:grid;gap:5.27cqw}
+.conc-row{
+  display:grid;align-items:center;
+  grid-template-columns:17% 23% 18.5% 1fr 7%;
+  min-height:10.62cqw;padding:.4cqw 1.3cqw;
+  background:var(--gray);border-radius:1.6cqw;
+  transition:background-color .25s ease,transform .25s ease,box-shadow .25s ease;
+}
+.conc-icon{
+  width:9.41cqw;height:8.95cqw;background:var(--teal);
+  -webkit-mask:var(--icon) left center/contain no-repeat;
+          mask:var(--icon) left center/contain no-repeat;
+  transition:background-color .25s ease,transform .3s cubic-bezier(.34,1.4,.64,1);
+}
+.conc-label{
+  color:var(--teal);font-weight:700;text-transform:uppercase;
+  font-size:clamp(9px,2.05cqw,15px);line-height:1.15;
+  transition:color .25s ease;
+}
+.conc-bars{display:grid;gap:.2cqw;width:100%}
+.conc-bar{height:4.05cqw;min-height:4px;transform-origin:left center}
+.conc-bar-teal{background:var(--teal);width:var(--w);transition:background-color .25s ease}
+.conc-bar-base{background:#fff;width:47.8%}
+.conc-pct{
+  justify-self:end;color:var(--teal);font-weight:800;
+  font-size:clamp(22px,9.3cqw,66px);line-height:1;letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums;white-space:nowrap;
+  transition:color .25s ease;
+}
+.conc-pct sup{font-size:.4em;font-weight:700;vertical-align:super;line-height:0}
+.conc-arrow{width:5.6cqw;height:auto;justify-self:end;fill:var(--teal);
+  transition:fill .25s ease,transform .3s cubic-bezier(.34,1.4,.64,1)}
+.conc-foot{
+  display:flex;justify-content:space-between;gap:1.5cqw;
+  margin-top:2.6cqw;color:#fff;font-size:clamp(9px,1.95cqw,14px);
+  text-transform:uppercase;
+}
+/* rollover */
+.conc-row:hover{background:#eef1f2;transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.16)}
+.conc-row:hover .conc-icon{background:var(--navy);transform:scale(1.09)}
+.conc-row:hover .conc-label,.conc-row:hover .conc-pct{color:var(--navy)}
+.conc-row:hover .conc-bar-teal{background:var(--navy)}
+.conc-row:hover .conc-arrow{fill:var(--navy);transform:translateY(-9%)}
+/* entrance */
+.conc[data-anim="pending"] .conc-row{opacity:0;transform:translateY(10px)}
+.conc[data-anim="pending"] .conc-bar{transform:scaleX(0)}
+.conc[data-anim="run"] .conc-row{
+  opacity:1;transform:none;
+  transition:opacity .55s ease var(--d),transform .55s ease var(--d),
+             background-color .25s ease,box-shadow .25s ease;
+}
+.conc[data-anim="run"] .conc-bar{
+  transform:scaleX(1);
+  transition:transform .95s cubic-bezier(.22,.85,.3,1) calc(var(--d) + .12s),background-color .25s ease;
+}
+@media (prefers-reduced-motion:reduce){
+  .conc[data-anim="pending"] .conc-row,.conc[data-anim="pending"] .conc-bar{opacity:1;transform:none}
+  .conc-row,.conc-icon,.conc-arrow,.conc-bar,.conc-pct,.conc-label{transition:none!important}
+  .conc-row:hover{transform:none}
+}
+@container (max-width:340px){
+  .conc-row{grid-template-columns:19% 26% 16% 1fr 8%}
 }
 
 /* ---------- highlight layouts ---------- */
@@ -370,10 +452,57 @@ footer{background:var(--footer);color:rgba(255,255,255,.88);padding-block:clamp(
       <h2>High-Growth, Ideally Located Submarket</h2>
       <p>Located just outside of Dallas proper, Rockwall is an extremely affluent, high-growth community. <strong>Ranked the #2 fastest-growing county</strong> in 2024, Rockwall County has exploded over recent years, assisted by a healthy economy, strong infrastructure, and an incredible quality of life. Connectivity via Interstate 30 and additional highways creates seamless access to the entire DFW metroplex, while the community itself contains a multitude of amenities, several corporate headquarters, and an expanding commercial base.</p>
     </div>
-    <figure class="fig">
-      <img src="assets/infographic-concentrations.webp" width="1400" height="1150" loading="lazy"
-           alt="Professional concentrations of Rockwall residents versus the national average: architecture and engineering 109% higher, legal 94% higher, sales 58% higher, management 48% higher. Source: Data USA 2022.">
-    </figure>
+    <div class="conc-wrap">
+      <figure class="conc" data-anim="pending" aria-labelledby="conc-title">
+        <figcaption class="conc-title" id="conc-title">Professional Concentrations<br>of Rockwall Residents</figcaption>
+        <ul class="conc-rows">
+      <li class="conc-row" style="--icon:url(assets/icons/architecture.svg);--d:0.00s">
+        <span class="conc-icon" aria-hidden="true"></span>
+        <span class="conc-label">Architecture &amp; Engineering</span>
+        <span class="conc-bars" aria-hidden="true">
+          <span class="conc-bar conc-bar-teal" style="--w:100.0%"></span>
+          <span class="conc-bar conc-bar-base"></span>
+        </span>
+        <span class="conc-pct"><span class="conc-num" data-to="109">109</span>%<sup>*</sup></span>
+        <svg class="conc-arrow" viewBox="0 0 60 88" aria-hidden="true"><path d="M30 0 60 34H44v54H16V34H0Z"/></svg>
+      </li>
+      <li class="conc-row" style="--icon:url(assets/icons/legal.svg);--d:0.09s">
+        <span class="conc-icon" aria-hidden="true"></span>
+        <span class="conc-label">Legal</span>
+        <span class="conc-bars" aria-hidden="true">
+          <span class="conc-bar conc-bar-teal" style="--w:92.8%"></span>
+          <span class="conc-bar conc-bar-base"></span>
+        </span>
+        <span class="conc-pct"><span class="conc-num" data-to="94">94</span>%<sup>*</sup></span>
+        <svg class="conc-arrow" viewBox="0 0 60 88" aria-hidden="true"><path d="M30 0 60 34H44v54H16V34H0Z"/></svg>
+      </li>
+      <li class="conc-row" style="--icon:url(assets/icons/sales.svg);--d:0.18s">
+        <span class="conc-icon" aria-hidden="true"></span>
+        <span class="conc-label">Sales</span>
+        <span class="conc-bars" aria-hidden="true">
+          <span class="conc-bar conc-bar-teal" style="--w:75.6%"></span>
+          <span class="conc-bar conc-bar-base"></span>
+        </span>
+        <span class="conc-pct"><span class="conc-num" data-to="58">58</span>%<sup>*</sup></span>
+        <svg class="conc-arrow" viewBox="0 0 60 88" aria-hidden="true"><path d="M30 0 60 34H44v54H16V34H0Z"/></svg>
+      </li>
+      <li class="conc-row" style="--icon:url(assets/icons/management.svg);--d:0.27s">
+        <span class="conc-icon" aria-hidden="true"></span>
+        <span class="conc-label">Management</span>
+        <span class="conc-bars" aria-hidden="true">
+          <span class="conc-bar conc-bar-teal" style="--w:70.8%"></span>
+          <span class="conc-bar conc-bar-base"></span>
+        </span>
+        <span class="conc-pct"><span class="conc-num" data-to="48">48</span>%<sup>*</sup></span>
+        <svg class="conc-arrow" viewBox="0 0 60 88" aria-hidden="true"><path d="M30 0 60 34H44v54H16V34H0Z"/></svg>
+      </li>
+        </ul>
+        <div class="conc-foot">
+          <span>Source: Data USA 2022</span>
+          <span>*Higher than the national average</span>
+        </div>
+      </figure>
+    </div>
   </div>
 </section>
 
@@ -679,6 +808,47 @@ footer{background:var(--footer);color:rgba(255,255,255,.88);padding-block:clamp(
     });
   }
   request();
+})();
+</script>
+
+<script>
+/* Concentrations graphic: bars grow and the percentages count up once the
+   figure enters the viewport. Static final state under prefers-reduced-motion. */
+(function () {
+  var fig = document.querySelector('.conc');
+  if (!fig) return;
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var nums = [].slice.call(fig.querySelectorAll('.conc-num'));
+
+  function settle() {
+    fig.setAttribute('data-anim', 'done');
+    nums.forEach(function (n) { n.textContent = n.getAttribute('data-to'); });
+  }
+  if (reduce || !('IntersectionObserver' in window)) { settle(); return; }
+
+  nums.forEach(function (n) { n.textContent = '0'; });
+
+  function count() {
+    var start = null, dur = 1100;
+    function frame(t) {
+      if (start === null) start = t;
+      var p = Math.min(1, (t - start) / dur);
+      var e = 1 - Math.pow(1 - p, 3);
+      nums.forEach(function (n) {
+        n.textContent = Math.round(+n.getAttribute('data-to') * e);
+      });
+      if (p < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  var io = new IntersectionObserver(function (entries, obs) {
+    if (!entries[0].isIntersecting) return;
+    obs.disconnect();
+    fig.setAttribute('data-anim', 'run');
+    count();
+  }, { threshold: 0.35 });
+  io.observe(fig);
 })();
 </script>
 

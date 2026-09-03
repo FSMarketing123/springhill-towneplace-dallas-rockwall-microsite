@@ -66,6 +66,35 @@ Note `.wrap` and `.narrow` share one element, so a bare percentage on `.narrow` 
 resolve against the section rather than the column. The measure mirrors the `.wrap`
 expression scaled to 83% instead.
 
+## Concentrations graphic
+
+The "Professional Concentrations of Rockwall Residents" panel is live HTML/CSS/SVG, not a
+raster. It replaced `infographic-concentrations.webp`, which has been deleted.
+
+Proportions are measured off the source artwork (`Rockwall-Residence-graphx.png`, 4951px
+wide) and expressed in `cqw` against a `container-type: inline-size` wrapper, so the whole
+panel scales exactly as the image did — rendered aspect 0.8218 against the source's 0.8215.
+
+**Bars are to scale.** The white bar is the national average (1.00x) and the teal bar is
+Rockwall's level, so +109% draws at 2.09x the baseline. Measured ratios in the source
+artwork are 2.065 / 1.930 / 1.596 / 1.493 against the stated +109 / 94 / 58 / 48%, which
+confirms the original was drawn the same way. The track is sized to the longest bar and
+each row's width is `(1 + pct/100) / 2.09`.
+
+**Icons** are the supplied `Architecture/Legal/Sales/Management-icon.svg` files. Each was
+2.1 MB of embedded Illustrator metadata; stripped to 43 KB total and each
+viewBox was tightened to its ink bounds so `contain` sizing renders the artwork at a
+predictable size. They are applied as CSS `mask-image` rather than `<img>` so they can
+recolour on hover.
+
+**Animation** — bars grow and the percentages count up when the figure crosses 35% of the
+viewport, staggered 90ms per row. **Rollover** — the card lifts, the icon, label, bar,
+number and arrow all shift to `--navy`, and the arrow rises. Both are disabled under
+`prefers-reduced-motion`, which renders the finished state immediately.
+
+Accessibility improved as a side effect: the figures, labels and footnote are now real
+text rather than pixels baked into an image.
+
 ## Parallax
 
 Scroll-driven, no library. One rAF-batched handler, viewport-culled by IntersectionObserver.
