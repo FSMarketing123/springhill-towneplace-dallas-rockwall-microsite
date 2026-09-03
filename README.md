@@ -68,19 +68,20 @@ expression scaled to 83% instead.
 
 ## Copy alignment
 
-Intro and all Investment Highlight copy are justified. Two supporting decisions:
+Intro and all Investment Highlight copy are justified.
 
 - The intro is a centre-composed block, so it uses `text-align-last: center`. Plain justify
   would leave each paragraph's last line — and the one-line third paragraph — flush left,
   which reads as a broken centre.
-- `hyphens: auto` on every justified block. The narrowest panel (Recent Vintage, 344px at
-  1440) opened visible word gaps without it — "Rockwall.   Offering   state-of-the-art" on
-  one line. Hyphenation evens the spacing. It relies on `lang="en-US"` on `<html>`.
+- `hyphens: none` on every justified block: words are never broken across lines. This is a
+  deliberate choice, not a default. The trade-off is visible word gaps in the narrowest
+  panel (Recent Vintage, 344px at 1440) — e.g. "Rockwall.   Offering   state-of-the-art".
+  Turning hyphenation back on evens that out at the cost of breaking words; widening that
+  panel or dropping its type a step would fix it without either.
 
 Justified blocks: `#overview .narrow p`, `#hl-submarket p`, and every `.panel-teal p` /
 `.panel-white p`. On phones the measure narrows to ~284px (~33 characters), which is tight
-for justification even hyphenated — switch those to `text-align: start` below ~600px if it
-reads poorly on device.
+for justification — switch those to `text-align: start` below ~600px if it reads poorly.
 
 ## Concentrations graphic
 

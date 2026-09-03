@@ -108,11 +108,11 @@ p:last-child{margin-bottom:0}
    would leave them (and the one-line third paragraph) flush left. */
 .overview .narrow p{
   text-align:justify;text-align-last:center;
-  hyphens:auto;-webkit-hyphens:auto;
+  hyphens:none;-webkit-hyphens:none;
 }
 #hl-submarket p,.panel-teal p,.panel-white p{
   text-align:justify;
-  hyphens:auto;-webkit-hyphens:auto;   /* narrow panels open big word gaps without it */
+  hyphens:none;-webkit-hyphens:none;   /* never break a word across lines */
 }
 
 /* ---------- full-bleed band ---------- */
