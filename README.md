@@ -94,8 +94,8 @@ Two tiles, both WebP lossless from `xx FX xx/`:
 
 | sections | tile | blend | colour | measured ground | grain |
 |---|---|---|---|---|---|
-| `#overview` `#properties` `#hl-submarket` | paper | screen | `rgba(65,60,57,.05)` | 239 | 3.6 |
-| triptych `#hl-location` `#hl-dfw` `#cta` | paper | multiply | inherited | 208 / 208 / 229 / 208 | 3.2-3.5 |
+| `#overview` `#properties` `#hl-submarket` `#hl-dfw` `#cta` | paper | screen | `rgba(65,60,57,.05)` | 239 | 3.6 |
+| triptych `#hl-location` | paper | multiply | inherited | 208 | 3.2 |
 | `.sec-teal` (`#hl-growth` + basis/offering) | lighter | multiply | inherited | 98,134,153 | 2.1 |
 | `#hl-brand` | paper | hard-light | `rgba(65,60,57,1)` | 232 | 5.4 |
 | `footer#contact` | lighter | color-burn | inherited | 67,65,66 | 4.1 |
@@ -104,9 +104,9 @@ Two tiles, both WebP lossless from `xx FX xx/`:
 
 ### Two things that make this work
 
-**Selectors are addressed by id where a class would cross groups.** `.sec-light` covers both
-`#hl-submarket` (screen) and `#hl-dfw` (multiply); `.sec-gray` covers `#hl-brand`, which takes
-hard-light instead. Using the classes would have collapsed those distinctions.
+**Selectors are addressed by id where a class would cross groups.** `.sec-gray` covers both
+`#hl-location` (multiply) and `#hl-brand` (hard-light), and `.cta-close` would not distinguish
+`#cta` from the grey sections. Using the classes would have collapsed those distinctions.
 
 **The ground rules use `background-color`, not the `background` shorthand.** `.sec-gray`,
 `.sec-teal`, `.sec-light`, `.cta-close` and `footer` previously set `background:` — a shorthand
