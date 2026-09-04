@@ -167,6 +167,30 @@ number and arrow all shift to `--navy`, and the arrow rises. Both are disabled u
 Accessibility improved as a side effect: the figures, labels and footnote are now real
 text rather than pixels baked into an image.
 
+## Scroll and hover effects
+
+Three independent systems, all disabled under `prefers-reduced-motion`:
+
+**Scale-in on scroll.** 15 content blocks (`.prop`, `.tri-under`, the teal/white copy
+panels, `.dev-pair`, `.i30`, `.brand-grid`, `.alt`, the aerial map, the DFW figure) start at
+`scale(.94)` and settle to 1 over 1.15s as they cross into view, one-shot per element. The
+scale only ever runs **up to** 1, never past it, so nothing overflows its box — which is why
+this needs no clipping wrappers. The hidden state is gated behind a `.js-rise` class that the
+script adds, so the page renders fully if the script never runs.
+
+**Cursor parallax on images.** 18 images carry `data-hpx`; on mousemove the crop shifts up to
+5% of its slack *opposite* the cursor and eases back on leave. It is skipped entirely on touch
+(`hover:none`). Excluded by request: the annotated aerial map and the Dallas skyline
+infographic — both carry baked-in text that should not drift.
+
+**Scroll roller and zoom** — see below.
+
+The hover offset composes with the scroll roller rather than fighting it: the roller drives
+`--py`, hover drives `--hy`, and `object-position` resolves
+`calc(var(--px-x) + var(--hx)) calc(var(--py) + var(--hy))`. The property exteriors express
+their bottom anchor as `--py: 100%` for the same reason, so they stay anchored at rest and
+still respond to the cursor.
+
 ## Parallax
 
 Scroll-driven, no library. One rAF-batched handler, viewport-culled by IntersectionObserver.
@@ -181,6 +205,8 @@ whose container already clips.
 | Communal table band | `.band img` | 40 → 0 |
 | Harbor aerial divider | `.divider img` | 0 → 40 |
 | Ballard / Chocxo renderings | `.dev-media img` | 0 → 12 |
+
+The triptych now sits inside `#hl-submarket` beneath the copy and the concentrations graphic; its former standalone `.sec-gray` section is gone.
 
 The two infographics deliberately carry **no** zoom. They have text baked into the raster,
 and scaling them inside a clipping figure cropped the top and bottom edges off — 34px on the
