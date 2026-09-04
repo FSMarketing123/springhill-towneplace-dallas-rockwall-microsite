@@ -347,13 +347,21 @@ table.spec tr:hover{background:rgba(255,255,255,.14)}
    border is interrupted by the Bonvoy mark. That interruption is a real
    <fieldset>/<legend>, which does it natively — no background-coloured mask,
    which matters because the section ground is a blended paper texture. */
-.brand-head{display:grid;grid-template-columns:1.25fr 1fr;gap:clamp(32px,5vw,72px);align-items:center}
-.brand-marks{display:flex;gap:clamp(24px,3.2vw,60px);align-items:center;justify-content:flex-end}
-.brand-marks img{width:clamp(112px,10.5vw,180px)}
+.brand-head{display:grid;grid-template-columns:1.35fr 1fr;gap:clamp(28px,3.6vw,60px);align-items:center}
+.brand-copy{
+  background:#64899D;color:#fff;
+  padding:clamp(26px,3vw,48px) clamp(24px,2.8vw,44px);
+  text-align:justify;text-align-last:left;hyphens:none;-webkit-hyphens:none;
+}
+.brand-copy h2,.brand-copy p{color:#fff}
+/* lockups stacked, SpringHill above TownePlace */
+.brand-marks{display:flex;flex-direction:column;gap:clamp(24px,3vw,52px);
+  align-items:center;justify-content:center}
+.brand-marks img{width:clamp(130px,12.5vw,215px)}
 /* the box runs wider than the text column, as in the reference */
-.brand-wide{width:min(calc(100% - 48px),1560px);margin:clamp(46px,5.2vw,86px) auto 0}
+.brand-wide{width:min(calc(100% - 48px),1560px);margin-inline:auto}
 .brand-box{
-  margin:0;min-width:0;
+  margin:clamp(46px,5.2vw,86px) 0 0;min-width:0;
   border:1px solid rgba(49,67,86,.42);border-radius:10px;
   padding:clamp(22px,2.6vw,40px) clamp(18px,2.4vw,40px) clamp(28px,3.2vw,50px);
 }
@@ -394,7 +402,7 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
   .hl-split,.brand-head,.foot-grid,.i30{grid-template-columns:1fr}
   .alt{grid-template-columns:1fr}
   .alt.flip>.panel-white{order:2}
-  .brand-marks{justify-content:flex-start}
+  .brand-marks{align-items:flex-start}
   .foot-logo{margin:0 0 12px}
 }
 @media (max-width:760px){
@@ -647,8 +655,9 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
 
 <!-- ============ HL: BRAND ============ -->
 <section class="sec-gray" id="hl-brand">
-  <div class="wrap brand-head">
-    <div>
+  <div class="brand-wide">
+    <div class="brand-head">
+    <div class="brand-copy">
       <h2>Recent Vintage, Premium-Branded Hotels</h2>
       <p>The TownePlace Suites, delivered in 2022, and the SpringHill Suites, delivered in 2017, represent two of the newest deliveries in Rockwall. Offering state-of-the-art construction and two of the most recognized brands in the world, these Hotels have been institutionally maintained and operated since their inception.</p>
       <p>The Properties benefit from their affiliation with Marriott, the world&rsquo;s most recognizable and top-performing hospitality brand. Marriott provides centralized marketing, booking, and rewards systems, providing the Hotel with access to <strong>over 237 million Marriott Bonvoy members</strong>.</p>
@@ -657,8 +666,7 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
       <img src="assets/logo-shs-navy.svg" alt="SpringHill Suites Dallas Rockwall" loading="lazy">
       <img src="assets/logo-tps-navy.svg" alt="TownePlace Suites Dallas Rockwall" loading="lazy">
     </div>
-  </div>
-  <div class="brand-wide">
+    </div>
     <fieldset class="brand-box">
       <legend><img class="bonvoy" src="assets/marriott-bonvoy.svg" alt="Marriott Bonvoy" loading="lazy"></legend>
         <div class="brand-tier">
@@ -950,7 +958,7 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
 
   /* ---- slow scale-in ---- */
   var RISE = ['.prop','.tri-under','#hl-location .panel-teal','#hl-location > .wrap > img',
-              '#hl-growth .panel-white','.dev-pair','.i30','#hl-brand .panel-teal',
+              '#hl-growth .panel-white','.dev-pair','.i30','.brand-copy',
               '.brand-box','#hl-dfw .panel-teal','#hl-dfw .fig','.alt'].join(',');
   var blocks = [].slice.call(document.querySelectorAll(RISE));
   if (blocks.length && !reduce && 'IntersectionObserver' in window) {

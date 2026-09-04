@@ -185,9 +185,12 @@ Two implementation notes:
   to stay on one line. Verified single-line at 768 / 1440 / 1797 / 2479; the tiers wrap to
   2/3/2/1 lines at 375, still centred.
 
-The lockups moved out of the teal panel onto the section ground, so they now use
-`logo-shs-navy.svg` / `logo-tps-navy.svg` (fill `#314356`) — the white versions would have
-been invisible on the light 232 ground.
+The copy sits in a `#64899D` panel with white justified text (`text-align-last: left`), and
+the head shares the **same wide container** as the box rather than the narrower `.wrap` — so
+the panel's left edge lands exactly on the box's left edge (both x=24 at 1440, verified
+equal at 375 too). Property lockups are stacked, SpringHill above TownePlace, and use
+`logo-shs-navy.svg` / `logo-tps-navy.svg` (fill `#314356`) because they sit on the light 232
+ground, not inside the panel.
 
 ## Parallax travel ceiling
 
