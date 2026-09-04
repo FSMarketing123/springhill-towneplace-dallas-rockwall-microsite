@@ -167,6 +167,28 @@ number and arrow all shift to `--navy`, and the arrow rises. Both are disabled u
 Accessibility improved as a side effect: the figures, labels and footnote are now real
 text rather than pixels baked into an image.
 
+## Brand affiliation section
+
+`#hl-brand` follows the supplied reference: copy left, property lockups right, then a
+full-width bordered box holding the 29 Marriott brands in **four tiers of 6 / 11 / 8 / 4**
+— Luxury, Premium, Select, Longer Stays. That is Marriott's own brand architecture, and the
+counts match the reference exactly against the 29 logos already in `assets/brands/`.
+
+Two implementation notes:
+
+- **The interrupted top border is a real `<fieldset>` / `<legend>`.** Browsers break the
+  fieldset border natively for a legend, so the Bonvoy mark sits in a genuine gap. The
+  alternative — a mask in the section's background colour — cannot work here, because the
+  ground is a blended paper texture rather than a flat fill.
+- **The box is wider than the text column** (`min(calc(100% - 48px), 1560px)`, so 1392px at
+  1440 against the 1100px `.wrap`), matching the reference and giving the 11-logo tier room
+  to stay on one line. Verified single-line at 768 / 1440 / 1797 / 2479; the tiers wrap to
+  2/3/2/1 lines at 375, still centred.
+
+The lockups moved out of the teal panel onto the section ground, so they now use
+`logo-shs-navy.svg` / `logo-tps-navy.svg` (fill `#314356`) — the white versions would have
+been invisible on the light 232 ground.
+
 ## Parallax travel ceiling
 
 Both the scroll roller (82% → 18%, i.e. 64% of available slack) and the cursor parallax (12%)
