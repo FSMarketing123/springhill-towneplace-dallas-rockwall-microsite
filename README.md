@@ -87,20 +87,21 @@ backgrounds on `.hero-bg`, which keeps the parallax zoom on a single element.
 
 `#overview` carries `assets/texture-paper.webp`, built from `xx FX xx/paper-lighter.png`
 (500x593, WebP lossless, 91KB -> 49KB), tiled at its native size with
-`background-attachment: fixed` and `background-blend-mode: screen`.
+`background-attachment: fixed` and `background-blend-mode: screen`, over
+`background-color: rgba(65, 60, 57, .05)`.
 
-**What screen does here.** The texture is opaque and near-white (mean RGB 249, stddev 7).
-Screen lightens toward white, so over `--gray` it resolves to ~254 — the section reads
-near-white and the grain flattens to a stddev of 0.7, effectively invisible. Measured:
+`background-color` is the bottom layer, so at 5% alpha the body's `--gray` shows through
+beneath it — and, more importantly, screen barely alters the texture when the layer it
+blends against is almost fully transparent. That is what brings the grain back:
 
-| blend | section mean | grain stddev |
+| colour layer | section mean | grain stddev |
 |---|---|---|
-| `screen` (current) | 254 | 0.7 |
-| `multiply` | 222 | 4.6 |
+| `rgba(65,60,57,.05)` (current) | 249 | 5.1 — grain visible |
+| `var(--gray)` opaque | 254 | 0.7 — grain washed out |
+| `#e3e3e3` with `multiply` | 222 | 4.6 — grain visible, keeps `#dedede` |
 
-Under multiply the section keeps `#dedede` and the grain is visible; that variant needs a
-`#e3e3e3` base to compensate (227 through a 249 grain lands back on 222). Under screen the
-base colour is irrelevant — 222 and 227 both resolve to ~254 — so it uses `--gray` directly.
+So the section now reads as a near-white paper panel rather than the `#dedede` of its
+neighbours. That is a deliberate tonal break, not a mismatch.
 
 `background-attachment: fixed` is ignored on iOS Safari and causes repaint jank, so
 `@media (hover:none)` drops it to `scroll`.

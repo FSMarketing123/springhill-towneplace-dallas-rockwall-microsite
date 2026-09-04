@@ -91,7 +91,9 @@ p:last-child{margin-bottom:0}
 
 /* ---------- overview ---------- */
 .overview{
-  background:url("assets/texture-paper.webp") center/500px auto repeat fixed,var(--gray);
+  /* background-color is the bottom layer, so the .05 alpha lets the body's --gray
+     show through beneath the paper texture. */
+  background:url("assets/texture-paper.webp") center/500px auto repeat fixed,rgba(65,60,57,.05);
   background-blend-mode:screen;
   text-align:center;
 }
