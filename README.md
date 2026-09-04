@@ -182,8 +182,14 @@ Two implementation notes:
   ground is a blended paper texture rather than a flat fill.
 - **The box is wider than the text column** (`min(calc(100% - 48px), 1560px)`, so 1392px at
   1440 against the 1100px `.wrap`), matching the reference and giving the 11-logo tier room
-  to stay on one line. Verified single-line at 768 / 1440 / 1797 / 2479; the tiers wrap to
-  2/3/2/1 lines at 375, still centred.
+  to stay on one line.
+
+Tier logos are `clamp(34px, 4.3vw, 68px)` and the property lockups `clamp(160px, 18vw, 320px)`.
+The 11-logo premium tier is the binding constraint on logo size, so it was measured rather
+than guessed: at 1440 that row uses 1196px of 1306px available, leaving ~8% headroom.
+Single-line tiers verified at 1024 / 1200 / 1440 / 1920 / 2479 (44 → 68px); they wrap to
+2/3/2/1 lines at 375, still centred. Going much beyond 4.3vw makes the premium tier wrap,
+which breaks the tier reading.
 
 The copy sits in a `#64899D` panel with white justified text (`text-align-last: left`), and
 the head shares the **same wide container** as the box rather than the narrower `.wrap` — so
