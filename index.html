@@ -22,6 +22,7 @@
   --teal-panel:#779397;
   --navy:#314356;
   --gray:#dedede;
+  --gray-paper:#e3e3e3;      /* multiplies through the paper grain (mean 249) back to --gray */
   --offwhite:#f4f4f4;
   --footer:#474546;
   --body:#454545;
@@ -90,7 +91,15 @@ p:last-child{margin-bottom:0}
 .hero-lockup{position:relative;z-index:2;width:clamp(300px,43.6vw,1100px);padding:0 24px}
 
 /* ---------- overview ---------- */
-.overview{background:var(--gray);text-align:center}
+.overview{
+  /* paper grain over the section colour: the PNG is opaque near-white (mean 249),
+     so multiply keeps --gray rather than washing the section out. */
+  background:url("assets/texture-paper.webp") center/500px auto repeat fixed,var(--gray-paper);
+  background-blend-mode:multiply;
+  text-align:center;
+}
+/* iOS Safari ignores background-attachment:fixed and repaints badly with it */
+@media (hover:none){.overview{background-attachment:scroll}}
 .overview p{color:var(--body)}
 .cta-row{
   display:flex;flex-wrap:wrap;gap:24px;justify-content:center;

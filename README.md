@@ -83,6 +83,27 @@ Tuned against the source capture: mean luma 107 vs 113, bottom corners within 1-
 channel, top corners ~15 light. The `::after` rule is gone; everything is layered
 backgrounds on `.hero-bg`, which keeps the parallax zoom on a single element.
 
+## Overview paper texture
+
+`#overview` carries `assets/texture-paper.webp`, built from `xx FX xx/paper-lighter.png`
+(500x593, WebP lossless, 91KB -> 49KB), tiled at its native size with
+`background-attachment: fixed`.
+
+Two things worth knowing:
+
+- The PNG is **opaque** and near-white (mean RGB 249). Dropped in as a plain background
+  image it replaces `--gray` and washes the section to 249, which reads as a mismatch
+  against the properties section directly below it (still 222). It is therefore blended
+  with `background-blend-mode: multiply`, and the base colour is `--gray-paper: #e3e3e3`
+  rather than `--gray` — 227 multiplied through a 249 grain lands back on 222 exactly.
+  Measured: mean 222, stddev 4.6 (the grain).
+- `background-attachment: fixed` is ignored on iOS Safari and causes repaint jank there,
+  so `@media (hover:none)` drops it to `scroll`. The texture is near-invisible either way,
+  so the fallback costs nothing.
+
+The source build had **no** texture here — its overview is flat `#dedede`, stddev 0.00.
+This is a new treatment, not a restoration.
+
 ## Copy alignment
 
 Intro and all Investment Highlight copy are justified.
