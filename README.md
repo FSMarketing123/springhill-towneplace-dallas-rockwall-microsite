@@ -240,8 +240,12 @@ during continuous scrolling, median frame 16.7 ms, p99 17.6 ms, max 18.9 ms, zer
 either way — neither effect can change an element's box.
 
 ## Open items
-- **Confidentiality Agreement URLs are unset.** Both CTA pairs use `href="#"`, marked
-  with `<!-- TODO -->` comments. Four links total (2 in `#overview`, 2 in `#cta`).
+- Confidentiality Agreement links are live. Both CTA pairs (4 links total) point at the
+  RightSignature signer template and at `assets/docs/TX-Dallas-Rockwall-SHS-TPS-CA.docx`.
+  The download uses a hyphenated filename on disk — the original contains an `&`, which
+  would need escaping in a URL — and a `download` attribute so the saved file keeps the
+  original name. Note the agreement is a public, unauthenticated download, same as the
+  other HWE microsites.
 - `assets/aerial-map.webp` is 1657px wide — the largest source available. Re-export
   larger from `../SpringHill & Towneplace Dallas Rockwall Microsite.indd` for a crisper
   full-width render.
