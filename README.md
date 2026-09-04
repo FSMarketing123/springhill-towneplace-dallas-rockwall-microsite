@@ -83,36 +83,44 @@ Tuned against the source capture: mean luma 107 vs 113, bottom corners within 1-
 channel, top corners ~15 light. The `::after` rule is gone; everything is layered
 backgrounds on `.hero-bg`, which keeps the parallax zoom on a single element.
 
-## Overview paper texture
+## Paper grounds
 
-`#overview`, `#properties` and `#hl-submarket` share `assets/texture-paper.webp`, built from `xx FX xx/paper-lighter.png`
-(500x593, WebP lossless, 91KB -> 49KB), tiled at its native size with
-`background-attachment: fixed` and `background-blend-mode: screen`, over
-`background-color: rgba(65, 60, 57, .05)`.
+Every section ground is a tiled paper texture, `fixed` at `30%` of the viewport so the
+pattern runs continuously down the whole page rather than restarting per section.
 
-`background-color` is the bottom layer, so at 5% alpha the body's `--gray` shows through
-beneath it — and, more importantly, screen barely alters the texture when the layer it
-blends against is almost fully transparent. That is what brings the grain back:
+Two tiles, both WebP lossless from `xx FX xx/`:
+`texture-paper.webp` (paper.png, mean 239, 91KB -> 73KB) and
+`texture-paper-lighter.webp` (paper-lighter.png, mean 249, 91KB -> 49KB).
 
-| colour layer | section mean | grain stddev |
-|---|---|---|
-| `rgba(65,60,57,.05)` (current) | 249 | 5.1 — grain visible |
-| `var(--gray)` opaque | 254 | 0.7 — grain washed out |
-| `#e3e3e3` with `multiply` | 222 | 4.6 — grain visible, keeps `#dedede` |
+| sections | tile | blend | colour | measured ground | grain |
+|---|---|---|---|---|---|
+| `#overview` `#properties` `#hl-submarket` | paper | screen | `rgba(65,60,57,.05)` | 239 | 3.6 |
+| triptych `#hl-location` `#hl-dfw` `#cta` | paper | multiply | inherited | 208 / 208 / 229 / 208 | 3.2-3.5 |
+| `.sec-teal` (`#hl-growth` + basis/offering) | lighter | multiply | inherited | 98,134,153 | 2.1 |
+| `#hl-brand` | paper | hard-light | `rgba(65,60,57,1)` | 232 | 5.4 |
+| `footer#contact` | lighter | color-burn | inherited | 67,65,66 | 4.1 |
 
-All three read as near-white paper panels — measured 249 / 250 / 250, grain stddev
-5.1 / 5.3 / 5.8 — rather than the flat `#dedede` and `#f4f4f4` used elsewhere. They share
-one `fixed` origin, so the pattern is continuous across them rather than restarting per
-section.
+`#highlights` (the Harbor divider) is deliberately untouched — it is a full-bleed photo.
 
-`#hl-submarket` is targeted **by id**, not by its `.sec-light` class: that class is shared
-with `#hl-dfw`, which keeps its flat `--offwhite` ground (verified 244, stddev 0.00). Add
-`#hl-dfw` to the same rule if you want it papered too.
+### Two things that make this work
 
-`background-attachment: fixed` is ignored on iOS Safari and causes repaint jank, so
-`@media (hover:none)` drops it to `scroll`.
+**Selectors are addressed by id where a class would cross groups.** `.sec-light` covers both
+`#hl-submarket` (screen) and `#hl-dfw` (multiply); `.sec-gray` covers `#hl-brand`, which takes
+hard-light instead. Using the classes would have collapsed those distinctions.
 
-The source build had **no** texture here — its overview is flat `#dedede`, stddev 0.00.
+**The ground rules use `background-color`, not the `background` shorthand.** `.sec-gray`,
+`.sec-teal`, `.sec-light`, `.cta-close` and `footer` previously set `background:` — a shorthand
+that resets `background-image` to `none`. Since those rules sit later in the stylesheet, they
+would have silently wiped the paper layer off every class-targeted section.
+
+Note `#hl-brand`: hard-light keys off the *top* layer, and the paper tile is light, so it
+resolves to screen — a near-black `background-color` produces a **light** 232 panel, not a dark
+one. That is the specified behaviour, just an unintuitive one.
+
+`background-attachment: fixed` is ignored on iOS Safari and repaints badly, so
+`@media (hover:none)` drops every one of these to `scroll`.
+
+The source build had no texture anywhere — its grounds are flat, stddev 0.00.
 
 ## Copy alignment
 

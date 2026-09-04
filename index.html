@@ -90,17 +90,46 @@ p:last-child{margin-bottom:0}
 .hero-lockup{position:relative;z-index:2;width:clamp(300px,43.6vw,1100px);padding:0 24px}
 
 /* ---------- overview ---------- */
-/* Paper-textured sections. #hl-submarket is targeted by id, not .sec-light —
-   that class is shared with #hl-dfw, which keeps the flat --offwhite ground. background-color is the bottom layer, so the .05 alpha
-   leaves it near-transparent — which is also why screen barely touches the texture
-   and the grain stays visible. Both sections share one fixed origin, so the pattern
-   runs continuously across the boundary between them. */
-#hl-submarket,.overview,.properties{
-  background:url("assets/texture-paper.webp") center/500px auto repeat fixed,rgba(65,60,57,.05);
+/* ---------- paper grounds ----------
+   Two tiles: texture-paper.webp (paper.png, mean 239) and texture-paper-lighter.webp
+   (paper-lighter.png, mean 249). Every ground is fixed at 30% of the viewport, so the
+   pattern runs continuously across the whole page rather than restarting per section.
+   Sections are addressed by id where a class would catch a section in another group —
+   .sec-light covers both #hl-submarket (screen) and #hl-dfw (multiply), and .sec-gray
+   covers #hl-brand, which takes the hard-light treatment instead. */
+#overview,#properties,#hl-submarket{
+  background-color:rgba(65,60,57,.05);
+  background-image:url("assets/texture-paper.webp");
   background-blend-mode:screen;
 }
+.sec-gray,#hl-location,#hl-dfw,#cta{
+  background-image:url("assets/texture-paper.webp");
+  background-blend-mode:multiply;
+}
+.sec-teal{
+  background-image:url("assets/texture-paper-lighter.webp");
+  background-blend-mode:multiply;
+}
+#hl-brand{
+  background-color:rgba(65,60,57,1);
+  background-image:url("assets/texture-paper.webp");
+  background-blend-mode:hard-light;
+}
+footer#contact{
+  background-image:url("assets/texture-paper-lighter.webp");
+  background-blend-mode:color-burn;
+}
+#overview,#properties,#hl-submarket,.sec-gray,.sec-teal,#hl-location,#hl-dfw,
+#hl-brand,#cta,footer#contact{
+  background-size:30%;
+  background-repeat:repeat;
+  background-attachment:fixed;
+}
 /* iOS Safari ignores background-attachment:fixed and repaints badly with it */
-@media (hover:none){#hl-submarket,.overview,.properties{background-attachment:scroll}}
+@media (hover:none){
+  #overview,#properties,#hl-submarket,.sec-gray,.sec-teal,#hl-location,#hl-dfw,
+  #hl-brand,#cta,footer#contact{background-attachment:scroll}
+}
 .overview{text-align:center}
 .overview p{color:var(--body)}
 .cta-row{
@@ -266,9 +295,9 @@ table.spec tr:hover{background:rgba(255,255,255,.14)}
 .hl-split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,72px);align-items:center}
 .fig{margin:0}
 .fig img{max-width:100%;max-height:100%;height:auto}
-.sec-light{background:var(--offwhite)}
-.sec-gray{background:var(--gray)}
-.sec-teal{background:var(--teal)}
+.sec-light{background-color:var(--offwhite)}
+.sec-gray{background-color:var(--gray)}
+.sec-teal{background-color:var(--teal)}
 .sec-teal h2,.sec-teal h3{color:var(--white)}
 .sec-teal p{color:rgba(255,255,255,.94)}
 
@@ -317,8 +346,8 @@ table.spec tr:hover{background:rgba(255,255,255,.14)}
 .alt .panel-white h3{color:var(--teal)}
 
 /* ---------- footer ---------- */
-.cta-close{background:var(--gray);text-align:center}
-footer{background:var(--footer);color:rgba(255,255,255,.88);padding-block:clamp(56px,7vw,104px);font-size:13.5px}
+.cta-close{background-color:var(--gray);text-align:center}
+footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:clamp(56px,7vw,104px);font-size:13.5px}
 .foot-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,5vw,72px);align-items:center}
 .foot-logo{width:clamp(180px,10.2vw,260px);margin-inline:auto}
 .foot-head{
