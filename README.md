@@ -167,6 +167,24 @@ number and arrow all shift to `--navy`, and the arrow rises. Both are disabled u
 Accessibility improved as a side effect: the figures, labels and footnote are now real
 text rather than pixels baked into an image.
 
+## Footer and section padding
+
+`#hl-location` carried an inline `padding-top:0`, a holdover from when the triptych sat
+flush above it. Once the triptych moved into `#hl-submarket` that left the section with
+0px top against 128px bottom, so its panel ran hard into the top edge. The inline override
+is gone and both sides are now `--pad`.
+
+Footer block padding is `clamp(36px,3.9vw,64px)` (was `56px/7vw/104px`) and the grid gap is
+`clamp(24px,2.8vw,44px)` (was `36px/5vw/72px`), which cuts the space around the HWE logo
+from 317px to 272px a side and the footer height from 703px to 613px at 1440.
+
+The residual 216px is not padding — the logo is vertically centred against a 501px-tall
+representatives column, so the row height sets it. Enlarging the logo or top-aligning it
+would be the lever if that space still reads as too much.
+
+`assets/hwe-white.svg` was **351KB of embedded Illustrator metadata** wrapping 18 paths.
+Stripped to 11.4KB, verified pixel-identical. It loads on every page view, twice.
+
 ## Scroll and hover effects
 
 Three independent systems, all disabled under `prefers-reduced-motion`:
