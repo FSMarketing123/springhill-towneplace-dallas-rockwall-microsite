@@ -194,7 +194,8 @@ which breaks the tier reading.
 The copy sits in a `#64899D` panel with white justified text (`text-align-last: left`), and
 the head shares the **same wide container** as the box rather than the narrower `.wrap` — so
 the panel's left edge lands exactly on the box's left edge (both x=24 at 1440, verified
-equal at 375 too). Property lockups are stacked, SpringHill above TownePlace, and use
+equal at 375, 1024 and 2479 too). The head grid is `2.95fr 1fr`, putting the panel at ~72%
+of the container width, with the lockups right-aligned flush to the container's right edge. Property lockups are stacked, SpringHill above TownePlace, and use
 `logo-shs-navy.svg` / `logo-tps-navy.svg` (fill `#314356`) because they sit on the light 232
 ground, not inside the panel.
 
