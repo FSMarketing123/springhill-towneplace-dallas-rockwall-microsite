@@ -90,16 +90,17 @@ p:last-child{margin-bottom:0}
 .hero-lockup{position:relative;z-index:2;width:clamp(300px,43.6vw,1100px);padding:0 24px}
 
 /* ---------- overview ---------- */
-/* Paper-textured sections. background-color is the bottom layer, so the .05 alpha
+/* Paper-textured sections. #hl-submarket is targeted by id, not .sec-light —
+   that class is shared with #hl-dfw, which keeps the flat --offwhite ground. background-color is the bottom layer, so the .05 alpha
    leaves it near-transparent — which is also why screen barely touches the texture
    and the grain stays visible. Both sections share one fixed origin, so the pattern
    runs continuously across the boundary between them. */
-.overview,.properties{
+#hl-submarket,.overview,.properties{
   background:url("assets/texture-paper.webp") center/500px auto repeat fixed,rgba(65,60,57,.05);
   background-blend-mode:screen;
 }
 /* iOS Safari ignores background-attachment:fixed and repaints badly with it */
-@media (hover:none){.overview,.properties{background-attachment:scroll}}
+@media (hover:none){#hl-submarket,.overview,.properties{background-attachment:scroll}}
 .overview{text-align:center}
 .overview p{color:var(--body)}
 .cta-row{
