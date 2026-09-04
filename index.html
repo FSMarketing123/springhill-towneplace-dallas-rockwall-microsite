@@ -70,12 +70,15 @@ p:last-child{margin-bottom:0}
 }
 .hero-bg{
   position:absolute;inset:0;z-index:0;
-  background:linear-gradient(168deg,#43a4ae 0%,#3f7f9c 34%,#345d7c 66%,#2f4d65 100%);
-}
-.hero-bg::after{
-  content:"";position:absolute;inset:0;
-  background:url("assets/texture-water.webp") center/cover no-repeat;
-  mix-blend-mode:soft-light;opacity:.85;
+  /* The source build shows the water/plaster photograph itself. The gradient is a
+     tint layered OVER it, not a fill under it — blending the photo at soft-light
+     buried the texture and made the hero read smoother and darker than the original. */
+  background:
+    linear-gradient(100deg,rgba(255,255,255,.03) 0%,rgba(22,46,66,.15) 100%),
+    linear-gradient(168deg,rgba(84,178,188,.14) 0%,rgba(66,131,161,.10) 34%,
+                    rgba(52,93,124,.15) 66%,rgba(40,66,88,.29) 100%),
+    url("assets/texture-water.webp") center/cover no-repeat,
+    #5b8296;
 }
 .hero-mast{
   position:absolute;top:0;left:0;right:0;z-index:2;

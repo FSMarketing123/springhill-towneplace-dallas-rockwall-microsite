@@ -66,6 +66,23 @@ Note `.wrap` and `.narrow` share one element, so a bare percentage on `.narrow` 
 resolve against the section rather than the column. The measure mirrors the `.wrap`
 expression scaled to 83% instead.
 
+## Hero
+
+`assets/texture-water.webp` is built from `xx LowRes xx/shutterstock_1462893491-lowres.jpg`
+(1800px, WebP q62). Note that file and `xx FX xx/shutterstock_1462893491.jpg` are the same
+image — identical 5184x3456 dimensions, mean per-channel difference 0.31/0.23/0.38 out of
+255. The "-lowres" name refers to JPEG compression, not resolution.
+
+The photograph is the hero's **base background layer**, with two gradients tinted over it:
+a left-to-right falloff and the teal-to-navy ramp. It was previously composited as a
+pseudo-element at `mix-blend-mode: soft-light; opacity:.85`, which buried the texture and
+made the hero read as a smooth gradient — measurably darker and flatter than the source
+build (mean luma 99 against the original's 113).
+
+Tuned against the source capture: mean luma 107 vs 113, bottom corners within 1-6 per
+channel, top corners ~15 light. The `::after` rule is gone; everything is layered
+backgrounds on `.hero-bg`, which keeps the parallax zoom on a single element.
+
 ## Copy alignment
 
 Intro and all Investment Highlight copy are justified.
