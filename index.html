@@ -359,15 +359,17 @@ table.spec tr:hover{background:rgba(255,255,255,.14)}
 /* ---------- footer ---------- */
 .cta-close{background-color:var(--gray);text-align:center}
 footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:clamp(36px,3.9vw,64px);font-size:13.5px}
-.foot-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,2.8vw,44px);align-items:center}
-.foot-logo{width:clamp(180px,10.2vw,260px);margin-inline:auto}
+.foot-grid{display:grid;grid-template-columns:1fr 2.5fr;gap:clamp(24px,2.8vw,44px);align-items:center}
+.foot-logo{width:clamp(160px,12vw,230px);margin-inline:0}
 .foot-head{
   font-size:12.5px;letter-spacing:.11em;text-transform:uppercase;font-weight:400;
   color:#fff;border-bottom:1px solid rgba(255,255,255,.45);
   padding-bottom:9px;margin:0 0 22px;
 }
-.foot-head+.foot-head,.rep+.foot-head{margin-top:32px}
-.rep{margin-bottom:20px;line-height:1.55}
+.foot-reps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  column-gap:clamp(20px,2.4vw,40px);row-gap:clamp(18px,1.8vw,30px)}
+.foot-reps+.foot-head{margin-top:clamp(26px,2.6vw,40px)}
+.rep{margin:0;line-height:1.55}
 .rep strong{display:block;color:#fff;font-weight:600}
 .rep a{color:rgba(255,255,255,.88);text-decoration:none}
 .rep a:hover,.rep a:focus-visible{text-decoration:underline}
@@ -379,11 +381,12 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
   .alt.flip>.panel-white{order:2}
   .brand-lockups{flex-direction:row;justify-content:center;gap:40px}
   .brand-lockups img{width:min(200px,42%)}
-  .foot-logo{margin:0 auto 12px}
+  .foot-logo{margin:0 0 12px}
 }
 @media (max-width:760px){
   .prop-grid{grid-template-columns:1fr;gap:34px}
   .brand-grid{grid-template-columns:repeat(3,1fr)}
+  .foot-reps{grid-template-columns:1fr}
   .btn{width:100%;max-width:340px}
   .cta-row{gap:16px}
 }
@@ -733,17 +736,21 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
     </div>
     <div>
       <h2 class="foot-head">Exclusive Representatives</h2>
-      <p class="rep"><strong>Austin Brooks</strong>Managing Director<br>
-        <a href="mailto:abrooks@hodgeswardelliott.com">abrooks@hodgeswardelliott.com</a></p>
-      <p class="rep"><strong>Michael Brandes</strong>Vice President<br>
-        <a href="mailto:mbrandes@hodgeswardelliott.com">mbrandes@hodgeswardelliott.com</a></p>
-      <p class="rep"><strong>Caiden Trivedi</strong>Analyst<br>
-        <a href="mailto:ctrivedi@hodgeswardelliott.com">ctrivedi@hodgeswardelliott.com</a></p>
-      <p class="rep"><strong>Dawson Ovard</strong>Analyst<br>
-        <a href="mailto:dovard@hodgeswardelliott.com">dovard@hodgeswardelliott.com</a></p>
+      <div class="foot-reps">
+        <p class="rep"><strong>Austin Brooks</strong>Managing Director<br>
+          <a href="mailto:abrooks@hodgeswardelliott.com">abrooks@hodgeswardelliott.com</a></p>
+        <p class="rep"><strong>Michael Brandes</strong>Vice President<br>
+          <a href="mailto:mbrandes@hodgeswardelliott.com">mbrandes@hodgeswardelliott.com</a></p>
+        <p class="rep"><strong>Caiden Trivedi</strong>Analyst<br>
+          <a href="mailto:ctrivedi@hodgeswardelliott.com">ctrivedi@hodgeswardelliott.com</a></p>
+        <p class="rep"><strong>Dawson Ovard</strong>Analyst<br>
+          <a href="mailto:dovard@hodgeswardelliott.com">dovard@hodgeswardelliott.com</a></p>
+      </div>
       <h2 class="foot-head">Acquisition Financing Advisor</h2>
-      <p class="rep" style="margin-bottom:0"><strong>Michael Britvan</strong>Managing Director<br>
-        <a href="mailto:mbritvan@hodgeswardelliott.com">mbritvan@hodgeswardelliott.com</a></p>
+      <div class="foot-reps">
+        <p class="rep"><strong>Michael Britvan</strong>Managing Director<br>
+          <a href="mailto:mbritvan@hodgeswardelliott.com">mbritvan@hodgeswardelliott.com</a></p>
+      </div>
     </div>
   </div>
 </footer>
@@ -755,7 +762,7 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
    data-px-mode="top"   progress measured from the top of the document (hero only)
    data-roll            roller: slides the crop window inside an object-fit:cover image
                         by animating object-position, so the element box never moves and
-                        can never overlap a neighbour (defaults 66% -> 34%)
+                        can never overlap a neighbour (defaults 82% -> 18%)
    data-roll-from/-to   roller range in percent
    Honours prefers-reduced-motion. rAF-batched, viewport-culled. */
 (function () {
@@ -776,8 +783,8 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
     el._to    = num(el, 'data-px-to', 12);
     el._top   = el.getAttribute('data-px-mode') === 'top';
     el._roll  = el.hasAttribute('data-roll');
-    el._rFrom = num(el, 'data-roll-from', 66);
-    el._rTo   = num(el, 'data-roll-to', 34);
+    el._rFrom = num(el, 'data-roll-from', 82);
+    el._rTo   = num(el, 'data-roll-to', 18);
     el._axis  = null;
     el._last = -1;
     el._lastY = -1;
@@ -941,7 +948,7 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
 
   /* ---- cursor parallax on images ---- */
   if (reduce || (window.matchMedia && matchMedia('(hover:none)').matches)) return;
-  var MAX = 5;                      /* percent of each image's crop slack */
+  var MAX = 12;                     /* percent of each image's crop slack */
   [].slice.call(document.querySelectorAll('[data-hpx]')).forEach(function (el) {
     var raf = null, tx = 0, ty = 0, cx = 0, cy = 0, over = false;
     function step() {

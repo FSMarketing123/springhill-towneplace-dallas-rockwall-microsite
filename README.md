@@ -167,6 +167,26 @@ number and arrow all shift to `--navy`, and the arrow rises. Both are disabled u
 Accessibility improved as a side effect: the figures, labels and footnote are now real
 text rather than pixels baked into an image.
 
+## Parallax travel ceiling
+
+Both the scroll roller (82% → 18%, i.e. 64% of available slack) and the cursor parallax (12%)
+are percentages of each image's **crop slack** — the overflow `object-fit: cover` produces.
+Measured travel at 1440:
+
+| image | slack | travel |
+|---|---|---|
+| `aerial-residential` | 272px | 174px |
+| `band-lobby` | 230px | 147px |
+| `marina` | 68px | 44px |
+| `shs-pool` | 21px | 13px |
+| `basis-room` | 11px | 7px |
+
+Images whose box aspect nearly matches their source have almost no slack, so no percentage
+increase can make them move much — `basis-room` has 11px to work with. Giving those more
+travel means rendering the image larger than its box, which requires a clipping ancestor
+(the wrappers that were tried and reverted). Adjusting a box's `min-height` to change its
+aspect is the other lever.
+
 ## Footer and section padding
 
 `#hl-location` carried an inline `padding-top:0`, a holdover from when the triptych sat
@@ -178,9 +198,10 @@ Footer block padding is `clamp(36px,3.9vw,64px)` (was `56px/7vw/104px`) and the 
 `clamp(24px,2.8vw,44px)` (was `36px/5vw/72px`), which cuts the space around the HWE logo
 from 317px to 272px a side and the footer height from 703px to 613px at 1440.
 
-The residual 216px is not padding — the logo is vertically centred against a 501px-tall
-representatives column, so the row height sets it. Enlarging the logo or top-aligning it
-would be the lever if that space still reads as too much.
+The footer grid is `1fr 2.5fr` with the logo flush left, and the representatives sit in a
+two-column `.foot-reps` grid with the section rules spanning its full width — matching the
+supplied layout. Splitting the reps into two columns also cut the footer from 613px to 459px
+at 1440, which shrank the space around the logo far more than the padding change did.
 
 `assets/hwe-white.svg` was **351KB of embedded Illustrator metadata** wrapping 18 paths.
 Stripped to 11.4KB, verified pixel-identical. It loads on every page view, twice.
@@ -197,7 +218,7 @@ this needs no clipping wrappers. The hidden state is gated behind a `.js-rise` c
 script adds, so the page renders fully if the script never runs.
 
 **Cursor parallax on images.** 18 images carry `data-hpx`; on mousemove the crop shifts up to
-5% of its slack *opposite* the cursor and eases back on leave. It is skipped entirely on touch
+12% of its slack *opposite* the cursor and eases back on leave. It is skipped entirely on touch
 (`hover:none`). Excluded by request: the annotated aerial map and the Dallas skyline
 infographic — both carry baked-in text that should not drift.
 
@@ -245,7 +266,7 @@ image on load and on resize. At 1440px, 13 roll on Y and 4 on X; at 375px all 18
 | `data-px` | Zoom. Defaults 0% → 12% |
 | `data-px-from` / `data-px-to` | Zoom range in percent (`40` = `scale(1.4)`) |
 | `data-px-mode="top"` | Progress measured from the top of the document. Hero only — it is already on screen at load and must start at zoom 0 |
-| `data-roll` | Roller. Defaults 66% → 34% |
+| `data-roll` | Roller. Defaults 82% → 18% |
 | `data-roll-from` / `data-roll-to` | Roller range in percent |
 
 Easing is smoothstep (`t²(3−2t)`) — slow in, slow out — for both effects.
