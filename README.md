@@ -126,9 +126,8 @@ The source build had no texture anywhere — its grounds are flat, stddev 0.00.
 
 Intro and all Investment Highlight copy are justified.
 
-- The intro is a centre-composed block, so it uses `text-align-last: center`. Plain justify
-  would leave each paragraph's last line — and the one-line third paragraph — flush left,
-  which reads as a broken centre.
+- The intro uses `text-align-last: left`, so each paragraph's last line — and the one-line
+  third paragraph — sits flush left rather than centred.
 - `hyphens: none` on every justified block: words are never broken across lines. This is a
   deliberate choice, not a default. The trade-off is visible word gaps in the narrowest
   panel (Recent Vintage, 344px at 1440) — e.g. "Rockwall.   Offering   state-of-the-art".
