@@ -90,15 +90,17 @@ p:last-child{margin-bottom:0}
 .hero-lockup{position:relative;z-index:2;width:clamp(300px,43.6vw,1100px);padding:0 24px}
 
 /* ---------- overview ---------- */
-.overview{
-  /* background-color is the bottom layer, so the .05 alpha lets the body's --gray
-     show through beneath the paper texture. */
+/* Paper-textured sections. background-color is the bottom layer, so the .05 alpha
+   leaves it near-transparent — which is also why screen barely touches the texture
+   and the grain stays visible. Both sections share one fixed origin, so the pattern
+   runs continuously across the boundary between them. */
+.overview,.properties{
   background:url("assets/texture-paper.webp") center/500px auto repeat fixed,rgba(65,60,57,.05);
   background-blend-mode:screen;
-  text-align:center;
 }
 /* iOS Safari ignores background-attachment:fixed and repaints badly with it */
-@media (hover:none){.overview{background-attachment:scroll}}
+@media (hover:none){.overview,.properties{background-attachment:scroll}}
+.overview{text-align:center}
 .overview p{color:var(--body)}
 .cta-row{
   display:flex;flex-wrap:wrap;gap:24px;justify-content:center;
@@ -131,7 +133,6 @@ p:last-child{margin-bottom:0}
 .band img{width:100%;height:clamp(320px,50vw,1250px);object-fit:cover}
 
 /* ---------- properties ---------- */
-.properties{background:var(--gray)}
 .prop-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .prop img{width:100%}
 .prop .exterior{width:100%;height:auto;aspect-ratio:546/340;object-fit:cover;object-position:50% 100%}

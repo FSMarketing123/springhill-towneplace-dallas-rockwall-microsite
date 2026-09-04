@@ -85,7 +85,7 @@ backgrounds on `.hero-bg`, which keeps the parallax zoom on a single element.
 
 ## Overview paper texture
 
-`#overview` carries `assets/texture-paper.webp`, built from `xx FX xx/paper-lighter.png`
+`#overview` and `#properties` share `assets/texture-paper.webp`, built from `xx FX xx/paper-lighter.png`
 (500x593, WebP lossless, 91KB -> 49KB), tiled at its native size with
 `background-attachment: fixed` and `background-blend-mode: screen`, over
 `background-color: rgba(65, 60, 57, .05)`.
@@ -100,8 +100,9 @@ blends against is almost fully transparent. That is what brings the grain back:
 | `var(--gray)` opaque | 254 | 0.7 — grain washed out |
 | `#e3e3e3` with `multiply` | 222 | 4.6 — grain visible, keeps `#dedede` |
 
-So the section now reads as a near-white paper panel rather than the `#dedede` of its
-neighbours. That is a deliberate tonal break, not a mismatch.
+Both sections read as near-white paper panels (249 / 250, grain stddev 5.1 / 5.3) rather
+than the `#dedede` used elsewhere. They share one `fixed` origin, so the pattern runs
+continuously across the boundary between them instead of restarting per section.
 
 `background-attachment: fixed` is ignored on iOS Safari and causes repaint jank, so
 `@media (hover:none)` drops it to `scroll`.
