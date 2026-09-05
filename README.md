@@ -249,10 +249,17 @@ scale only ever runs **up to** 1, never past it, so nothing overflows its box �
 this needs no clipping wrappers. The hidden state is gated behind a `.js-rise` class that the
 script adds, so the page renders fully if the script never runs.
 
-**Cursor parallax on images.** 18 images carry `data-hpx`; on mousemove the crop shifts up to
-12% of its slack *opposite* the cursor and eases back on leave. It is skipped entirely on touch
-(`hover:none`). Excluded by request: the annotated aerial map and the Dallas skyline
-infographic — both carry baked-in text that should not drift.
+**Hover zoom on images.** 18 images carry `data-hpx`; on hover they zoom to
+`object-view-box: inset(7%)` over 500ms. `object-view-box` crops *into the source* inside the
+element box, so the image never grows past its frame — which is why this needs no clipping
+wrapper the way `transform: scale()` would. Verified by diffing a forced-hover render against
+the resting one: the changed region is exactly 546×240, the image's own box, and the adjacent
+column is pixel-identical.
+
+It is pure CSS (no script), gated behind `@supports (object-view-box: inset(0%))` and
+`@media (hover:hover)` — browsers without the property simply get no hover zoom, and touch
+devices are skipped. Excluded by request: the annotated aerial map and the Dallas skyline
+infographic, both of which carry baked-in text.
 
 **Scroll roller and zoom** — see below.
 
