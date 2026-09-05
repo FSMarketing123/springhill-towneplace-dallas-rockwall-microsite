@@ -46,17 +46,7 @@ img{max-width:100%;height:auto;display:block}
 /* ---------- parallax ---------- */
 [data-px]{transform:scale(var(--pz,1));transform-origin:50% 50%;backface-visibility:hidden}
 [data-px].px-live{will-change:transform}
-[data-roll],[data-hpx]{object-position:var(--px-x,50%) var(--py,50%)}
-/* Hover zoom. object-view-box crops into the source *inside* the element box, so the
-   image never grows past its frame — which is why this needs no clipping wrapper the
-   way transform:scale would. Progressive enhancement: browsers without it simply get
-   no hover zoom. */
-@supports (object-view-box: inset(0%)){
-  @media (hover:hover){
-    [data-hpx]{object-view-box:inset(0%);transition:object-view-box .5s cubic-bezier(.22,.85,.3,1)}
-    [data-hpx]:hover{object-view-box:inset(7%)}
-  }
-}
+[data-roll]{object-position:var(--px-x,50%) var(--py,50%)}
 /* slow scale-in as a block scrolls into view. The hidden state is gated behind a class
    that JS adds, so the page still renders fully if the script never runs. */
 .js-rise [data-rise]{transform:scale(.94);opacity:0}
@@ -66,9 +56,7 @@ img{max-width:100%;height:auto;display:block}
 }
 @media (prefers-reduced-motion:reduce){
   [data-px]{transform:none!important}
-  [data-roll],[data-hpx]{object-position:var(--px-x,50%) var(--py,50%)!important}
-  [data-hpx]{transition:none!important}
-  [data-hpx]:hover{object-view-box:inset(0%)}
+  [data-roll]{object-position:var(--px-x,50%) var(--py,50%)!important}
   .js-rise [data-rise],.js-rise [data-rise].risen{transform:none;opacity:1;transition:none}
 }
 a{color:inherit}
@@ -459,7 +447,7 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
 <!-- ============ IMAGE BAND ============ -->
 <div class="band">
   <img src="assets/band-lobby.webp" width="2400" height="1600" loading="lazy"
-       alt="Communal high-top table and lounge seating beneath the circular ceiling feature in the SpringHill Suites Dallas Rockwall lobby" data-px data-px-from="40" data-px-to="0" data-roll data-hpx>
+       alt="Communal high-top table and lounge seating beneath the circular ceiling feature in the SpringHill Suites Dallas Rockwall lobby" data-px data-px-from="40" data-px-to="0" data-roll>
 </div>
 
 <!-- ============ PROPERTIES ============ -->
@@ -469,7 +457,7 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
 
       <article class="prop">
         <img class="exterior" src="assets/shs-exterior.webp" width="1600" height="1067" loading="lazy"
-             alt="SpringHill Suites Dallas Rockwall exterior and porte-cochère at dusk" data-hpx>
+             alt="SpringHill Suites Dallas Rockwall exterior and porte-cochère at dusk">
         <div class="prop-panel">
           <img class="lockup" src="assets/logo-shs-white.svg" alt="SpringHill Suites Dallas Rockwall">
           <table class="spec">
@@ -488,20 +476,20 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
         </div>
         <div class="prop-pair">
           <img src="assets/shs-pool.webp" width="1000" height="667" loading="lazy"
-               alt="Outdoor pool and courtyard at SpringHill Suites Dallas Rockwall, lit at night" data-roll data-hpx>
+               alt="Outdoor pool and courtyard at SpringHill Suites Dallas Rockwall, lit at night" data-roll>
           <img src="assets/shs-lounge.webp" width="1000" height="667" loading="lazy"
-               alt="Lobby lounge seating and market pantry at SpringHill Suites Dallas Rockwall" data-roll data-hpx>
+               alt="Lobby lounge seating and market pantry at SpringHill Suites Dallas Rockwall" data-roll>
         </div>
         <div class="prop-room">
           <img src="assets/shs-room.webp" width="1600" height="1067" loading="lazy"
-               alt="Double queen guestroom with glass-partition bath at SpringHill Suites Dallas Rockwall" data-roll data-hpx>
+               alt="Double queen guestroom with glass-partition bath at SpringHill Suites Dallas Rockwall" data-roll>
           <p class="prop-cap">SpringHill Suites Dallas Rockwall</p>
         </div>
       </article>
 
       <article class="prop">
         <img class="exterior" src="assets/tps-exterior.webp" width="1600" height="1068" loading="lazy"
-             alt="TownePlace Suites Dallas Rockwall exterior and entrance at dusk" data-hpx>
+             alt="TownePlace Suites Dallas Rockwall exterior and entrance at dusk">
         <div class="prop-panel">
           <img class="lockup" src="assets/logo-tps-white.svg" alt="TownePlace Suites Dallas Rockwall">
           <table class="spec">
@@ -520,13 +508,13 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
         </div>
         <div class="prop-pair">
           <img src="assets/tps-pool.webp" width="1000" height="667" loading="lazy"
-               alt="Outdoor pool deck and lounge chairs at TownePlace Suites Dallas Rockwall" data-roll data-hpx>
+               alt="Outdoor pool deck and lounge chairs at TownePlace Suites Dallas Rockwall" data-roll>
           <img src="assets/tps-lounge.webp" width="1000" height="667" loading="lazy"
-               alt="Lobby lounge with blue armchairs and workspace at TownePlace Suites Dallas Rockwall" data-roll data-hpx>
+               alt="Lobby lounge with blue armchairs and workspace at TownePlace Suites Dallas Rockwall" data-roll>
         </div>
         <div class="prop-room">
           <img src="assets/tps-room.webp" width="1600" height="1067" loading="lazy"
-               alt="King studio suite with sofa and window at TownePlace Suites Dallas Rockwall" data-roll data-hpx>
+               alt="King studio suite with sofa and window at TownePlace Suites Dallas Rockwall" data-roll>
           <p class="prop-cap">TownePlace Suites Dallas Rockwall</p>
         </div>
       </article>
@@ -538,7 +526,7 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
 <!-- ============ HIGHLIGHTS DIVIDER ============ -->
 <section class="divider" id="highlights">
   <img src="assets/harbor-aerial.webp" width="1900" height="1266" loading="lazy"
-       alt="Aerial view of The Harbor mixed-use destination on Lake Ray Hubbard in Rockwall, Texas" data-px data-px-from="0" data-px-to="40" data-roll data-hpx>
+       alt="Aerial view of The Harbor mixed-use destination on Lake Ray Hubbard in Rockwall, Texas" data-px data-px-from="0" data-px-to="40" data-roll>
   <div class="plate"><h2>Investment Highlights</h2></div>
 </section>
 
@@ -603,12 +591,12 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
   </div>
   <div class="wrap tri tri-under">
     <img class="tri-top" src="assets/aerial-residential.webp" width="1800" height="1058" loading="lazy"
-         alt="Aerial view of established residential neighborhoods along the Rockwall shoreline of Lake Ray Hubbard" data-roll data-hpx>
+         alt="Aerial view of established residential neighborhoods along the Rockwall shoreline of Lake Ray Hubbard" data-roll>
     <div class="tri-pair">
       <img src="assets/marina.webp" width="1600" height="1002" loading="lazy"
-           alt="Marina docks and the Rockwall lighthouse at The Harbor on Lake Ray Hubbard" data-roll data-hpx>
+           alt="Marina docks and the Rockwall lighthouse at The Harbor on Lake Ray Hubbard" data-roll>
       <img src="assets/harbor-fountain.webp" width="1600" height="1067" loading="lazy"
-           alt="Fountains and waterfront promenade at The Harbor in Rockwall, Texas" data-roll data-hpx>
+           alt="Fountains and waterfront promenade at The Harbor in Rockwall, Texas" data-roll>
     </div>
   </div>
 </section>
@@ -638,7 +626,7 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
       <figure class="dev-card">
         <div class="dev-media">
           <img src="assets/ballard-rendering.webp" width="1600" height="900" loading="lazy"
-               alt="Rendering of the planned Ballard Gigafactory in Rockwall, Texas" data-px data-roll data-hpx>
+               alt="Rendering of the planned Ballard Gigafactory in Rockwall, Texas" data-px data-roll>
           <img class="dev-logo" src="assets/logo-ballard.svg" alt="Ballard">
         </div>
         <figcaption class="dev-cap">$200-Million Ballard Gigafactory</figcaption>
@@ -646,7 +634,7 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
       <figure class="dev-card">
         <div class="dev-media">
           <img src="assets/chocxo-rendering.webp" width="1600" height="900" loading="lazy"
-               alt="Rendering of the planned Chocxo chocolate factory and Chewters Chocolates building in Rockwall, Texas" data-px data-roll data-hpx>
+               alt="Rendering of the planned Chocxo chocolate factory and Chewters Chocolates building in Rockwall, Texas" data-px data-roll>
           <img class="dev-logo" src="assets/logo-chocxo.svg" alt="Chocxo — Simply Better Chocolate">
         </div>
         <figcaption class="dev-cap">$21-Million Chocxo Chocolate Factory</figcaption>
@@ -658,7 +646,7 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
         <p>The State of Texas is also contributing <strong>$1.5 billion in planned roadway improvements</strong> over the next several years, <strong>including $750 million planned for the widening of I-30 across Lake Ray Hubbard and Rockwall County.</strong></p>
       </div>
       <img src="assets/i30-rendering.webp" width="1600" height="800" loading="lazy"
-           alt="Rendering of the planned Interstate 30 widening across Lake Ray Hubbard in Rockwall County" data-roll data-hpx>
+           alt="Rendering of the planned Interstate 30 widening across Lake Ray Hubbard in Rockwall County" data-roll>
     </div>
   </div>
 </section>
@@ -744,12 +732,12 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
         <p>The anticipated transaction price(s) place a new owner&rsquo;s all-in basis significantly below replacement cost allowing an investor to benefit substantially from a combination of location in a growing economy and upside opportunity.</p>
       </div>
       <img src="assets/basis-room.webp" width="1600" height="1067" loading="lazy"
-           alt="Double queen guestroom with wood-plank accent wall at TownePlace Suites Dallas Rockwall" data-roll data-hpx>
+           alt="Double queen guestroom with wood-plank accent wall at TownePlace Suites Dallas Rockwall" data-roll>
     </article>
 
     <article class="alt flip" id="hl-offering">
       <img src="assets/offering-room.webp" width="1600" height="1067" loading="lazy"
-           alt="King guestroom with glass-partition bath and lounge seating at SpringHill Suites Dallas Rockwall" data-roll data-hpx>
+           alt="King guestroom with glass-partition bath and lounge seating at SpringHill Suites Dallas Rockwall" data-roll>
       <div class="panel-white">
         <h3>Optimal Offering &ndash; Fee Simple, Non-Union, Unencumbered By Management</h3>
         <p>The Properties are offered fee simple and free and clear of existing management, affording new ownership maximum optionality in the future operation and capitalization of the Hotels, available for purchase individually or as a portfolio.</p>
@@ -961,7 +949,7 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
 <script>
 /* Slow scale-in on scroll. The hidden state is gated behind a .js-rise class
    this script adds, so the page still renders fully if the script never runs.
-   The image hover zoom is pure CSS (object-view-box) — see the stylesheet. */
+   Images have no hover effect; the scroll roller is in the parallax script above. */
 (function () {
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 

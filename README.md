@@ -240,7 +240,7 @@ Stripped to 11.4KB, verified pixel-identical. It loads on every page view, twice
 
 ## Scroll and hover effects
 
-Three independent systems, all disabled under `prefers-reduced-motion`:
+Two systems, both disabled under `prefers-reduced-motion`:
 
 **Scale-in on scroll.** 15 content blocks (`.prop`, `.tri-under`, the teal/white copy
 panels, `.dev-pair`, `.i30`, `.brand-grid`, `.alt`, the aerial map, the DFW figure) start at
@@ -249,25 +249,13 @@ scale only ever runs **up to** 1, never past it, so nothing overflows its box �
 this needs no clipping wrappers. The hidden state is gated behind a `.js-rise` class that the
 script adds, so the page renders fully if the script never runs.
 
-**Hover zoom on images.** 18 images carry `data-hpx`; on hover they zoom to
-`object-view-box: inset(7%)` over 500ms. `object-view-box` crops *into the source* inside the
-element box, so the image never grows past its frame — which is why this needs no clipping
-wrapper the way `transform: scale()` would. Verified by diffing a forced-hover render against
-the resting one: the changed region is exactly 546×240, the image's own box, and the adjacent
-column is pixel-identical.
-
-It is pure CSS (no script), gated behind `@supports (object-view-box: inset(0%))` and
-`@media (hover:hover)` — browsers without the property simply get no hover zoom, and touch
-devices are skipped. Excluded by request: the annotated aerial map and the Dallas skyline
-infographic, both of which carry baked-in text.
+**Images have no hover effect.** The `object-view-box` hover zoom was removed at request;
+`data-hpx` and its `@supports` block are gone entirely. Images respond to scroll only.
 
 **Scroll roller and zoom** — see below.
 
-The hover offset composes with the scroll roller rather than fighting it: the roller drives
-`--py`, hover drives `--hy`, and `object-position` resolves
-`calc(var(--px-x) + var(--hx)) calc(var(--py) + var(--hy))`. The property exteriors express
-their bottom anchor as `--py: 100%` for the same reason, so they stay anchored at rest and
-still respond to the cursor.
+The property exteriors express their bottom anchor as `--py: 100%` so the shared
+`object-position` rule can drive them from the same custom property as everything else.
 
 ## Parallax
 
