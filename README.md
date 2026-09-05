@@ -85,8 +85,13 @@ backgrounds on `.hero-bg`, which keeps the parallax zoom on a single element.
 
 ## Paper grounds
 
-Every section ground is a tiled paper texture, `fixed` at `30%` of the viewport so the
-pattern runs continuously down the whole page rather than restarting per section.
+Every section ground is a tiled paper texture, `fixed` at `max(320px, 30%)` so the pattern
+runs continuously down the whole page rather than restarting per section.
+
+The `320px` floor matters: `background-size` percentages resolve against the viewport (when
+`fixed`) or the section box (when `scroll`), so a bare `30%` rendered the 500px tile at
+**113px on a 375px phone** against 432px at 1440 — the grain read as far too fine. Above a
+~1067px viewport `30%` already exceeds 320px, so wide screens are unchanged.
 
 Two tiles, both WebP lossless from `xx FX xx/`:
 `texture-paper.webp` (paper.png, mean 239, 91KB -> 73KB) and

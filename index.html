@@ -129,7 +129,10 @@ footer#contact{
 }
 #overview,#properties,#hl-submarket,.sec-gray,.sec-teal,#hl-location,#hl-dfw,
 #hl-brand,#cta,footer#contact{
-  background-size:30%;
+  /* 30% of a 375px viewport rendered the 500px tile at 113px — the grain read as
+     "zoomed out" on phones. The floor keeps it a consistent physical size; above a
+     ~1067px viewport 30% already exceeds 320px, so wide screens are unchanged. */
+  background-size:max(320px,30%);
   background-repeat:repeat;
   background-attachment:fixed;
 }
@@ -400,7 +403,6 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
   .hl-split,.brand-head,.foot-grid,.i30{grid-template-columns:1fr}
   .alt{grid-template-columns:1fr}
   .alt.flip>.panel-white{order:2}
-  .brand-marks{align-items:flex-start}
   .foot-logo{margin:0 0 12px}
 }
 @media (max-width:760px){
