@@ -211,6 +211,12 @@ as `#hl-growth`** — `.alt{gap:8px}` and `.alt+.alt{margin-top:8px}`, matching 
 `.i30`. They previously used `gap: 0` (panel flush to image) with a
 `clamp(20px,2.4vw,34px)` row gap.
 
+`#hl-location` and `#hl-dfw` are on the same 8px gutter: their `.wrap` was a plain block, so
+the teal panel sat flush against the aerial map / DFW infographic beneath it. Both are now
+`display: grid; gap: 8px`. Note the wraps became grids — the four `data-rise` selectors that
+target their children (`#hl-location .panel-teal`, `#hl-location > .wrap > img`,
+`#hl-dfw .panel-teal`, `#hl-dfw .fig`) were re-checked and still resolve.
+
 At 1440 that reads as four equal 546×374 cells with uniform 8px gutters. The `flip` order on
 `#hl-offering` is unchanged, so it still leads with its image.
 
