@@ -55,6 +55,8 @@ img{max-width:100%;height:auto;display:block}
   transition:transform 1.15s cubic-bezier(.22,.85,.3,1),opacity .85s ease;
 }
 @media (prefers-reduced-motion:reduce){
+  .brand-mark{transition:none}
+  .brand-mark:hover{transform:none}
   .brand-tier img{transition:none}
   .brand-tier img:hover{transform:none}
   [data-px]{transform:none!important}
@@ -360,7 +362,21 @@ table.spec tr:hover{background:rgba(255,255,255,.14)}
 /* lockups stacked, SpringHill above TownePlace */
 .brand-marks{display:flex;flex-direction:column;gap:clamp(24px,3vw,52px);
   align-items:center;justify-content:center;align-self:stretch}
+.brand-mark{
+  display:block;text-decoration:none;
+  transition:opacity .25s ease,transform .3s cubic-bezier(.34,1.4,.64,1);
+  opacity:.92;
+}
 .brand-marks img{width:clamp(160px,18vw,320px)}
+@media (hover:hover){
+  .brand-mark:hover{opacity:1;transform:translateY(-3px) scale(1.05)}
+}
+.brand-mark:focus-visible{
+  opacity:1;outline:2px solid var(--navy);outline-offset:10px;border-radius:2px;
+}
+/* the anchor targets sit flush at the viewport top otherwise */
+#prop-shs,#prop-tps{scroll-margin-top:clamp(24px,4vw,88px)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 /* the box runs wider than the text column, as in the reference */
 .brand-wide{width:min(calc(100% - 48px),1560px);margin-inline:auto}
 .brand-box{
@@ -468,7 +484,7 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
   <div class="wrap">
     <div class="prop-grid">
 
-      <article class="prop">
+      <article class="prop" id="prop-shs">
         <img class="exterior" src="assets/shs-exterior.webp" width="1600" height="1067" loading="lazy"
              alt="SpringHill Suites Dallas Rockwall exterior and porte-cochère at dusk">
         <div class="prop-panel">
@@ -500,7 +516,7 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
         </div>
       </article>
 
-      <article class="prop">
+      <article class="prop" id="prop-tps">
         <img class="exterior" src="assets/tps-exterior.webp" width="1600" height="1068" loading="lazy"
              alt="TownePlace Suites Dallas Rockwall exterior and entrance at dusk">
         <div class="prop-panel">
@@ -674,8 +690,14 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
       <p>The Properties benefit from their affiliation with Marriott, the world&rsquo;s most recognizable and top-performing hospitality brand. Marriott provides centralized marketing, booking, and rewards systems, providing the Hotel with access to <strong>over 237 million Marriott Bonvoy members</strong>.</p>
     </div>
     <div class="brand-marks">
-      <img src="assets/logo-shs-navy.svg" alt="SpringHill Suites Dallas Rockwall" loading="lazy">
-      <img src="assets/logo-tps-navy.svg" alt="TownePlace Suites Dallas Rockwall" loading="lazy">
+      <a class="brand-mark" href="#prop-shs">
+        <img src="assets/logo-shs-navy.svg" alt="SpringHill Suites Dallas Rockwall" loading="lazy">
+        <span class="sr-only">— jump to the property snapshot</span>
+      </a>
+      <a class="brand-mark" href="#prop-tps">
+        <img src="assets/logo-tps-navy.svg" alt="TownePlace Suites Dallas Rockwall" loading="lazy">
+        <span class="sr-only">— jump to the property snapshot</span>
+      </a>
     </div>
     </div>
     <fieldset class="brand-box">

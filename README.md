@@ -204,6 +204,23 @@ of the container width, with the lockups right-aligned flush to the container's 
 `logo-shs-navy.svg` / `logo-tps-navy.svg` (fill `#314356`) because they sit on the light 232
 ground, not inside the panel.
 
+## Property lockups link to the snapshot
+
+The two navy lockups in `.brand-marks` are anchors. Each targets **its own** card —
+`#prop-shs` / `#prop-tps` on the two `.prop` articles — rather than the `#properties`
+section, which matters on mobile where the cards stack: the two targets land 1102px apart
+at 375px, against effectively the same position on desktop.
+
+Both carry `scroll-margin-top: clamp(24px,4vw,88px)` so the card does not sit flush against
+the viewport edge, and the page's existing `scroll-behavior: smooth` animates the jump
+(disabled under `prefers-reduced-motion`).
+
+Hover lifts the mark — opacity `.92 → 1`, `translateY(-3px) scale(1.05)`. The stacked
+lockups are 259×121 with a 43px gap, so the scale grows each by 3px vertically per side and
+cannot reach its neighbour. There is a `:focus-visible` outline for keyboard users, and each
+anchor carries a visually-hidden "jump to the property snapshot" so the link's purpose is not
+left to the logo's alt text alone.
+
 ## Brand logo hover
 
 The 29 `assets/brands/` marks lift on hover — opacity `.88 → 1` and `scale(1.14)`, 250/300ms.
