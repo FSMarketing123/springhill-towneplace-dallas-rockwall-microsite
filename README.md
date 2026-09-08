@@ -285,17 +285,17 @@ The attributes that advertise the images as activatable (`role="button"`, `tabin
 `aria-label` = alt + " — enlarge", `cursor: zoom-in`) are applied **by the script**, so
 without JS they stay plain images rather than lying about being buttons.
 
-### The two text-bearing graphics get the popout but not the crop
+### Text-bearing graphics get the popout but not the crop
 
-`aerial-map.webp` and `infographic-dfw.webp` carry `.zoom-flat`, which opts them out of the
-hover crop while keeping the click-to-enlarge. Their labels are baked into the bitmap and run
-right to the edges, so a 4% inset removes copy rather than framing it. Measured on the source
-files: on the infographic, ink reaches all four edges and the top of "DFW GAINED MORE" sits
-1.05% from the top edge; on the map, the DALLAS DOWNTOWN callout starts 2.13% down. Both are
-inside a 4% crop. This is the same reason these two were held back from the scroll roller.
+`aerial-map.webp` carries `.zoom-flat`, which opts it out of the hover crop while keeping the
+click-to-enlarge. Its labels are baked into the bitmap and run close to the edges, so a 4%
+inset removes copy rather than framing it — the DALLAS DOWNTOWN callout starts 2.13% down,
+inside a 4% crop. This is the same reason it was held back from the scroll roller. The DFW
+infographic was the other `.zoom-flat` case (ink reached all four edges; the top of "DFW
+GAINED MORE" sat 1.05% from the top) until it was replaced by the MSA exhibit.
 
 If the crop is wanted anyway, the ceiling is roughly 1% and only on the top edge — not enough
-to read as an effect. The alternative is re-exporting both with a transparent margin.
+to read as an effect. The alternative is re-exporting with a transparent margin.
 
 Verified: opens on click, on Enter and on tap at 375; closes via the button, via backdrop click
 and via Esc; image scales to fit (1286px wide at 1440, 353px at 375). Esc is belt-and-braces —
@@ -304,6 +304,67 @@ UA signal does not always arrive under automation. Confirmed the lobby band and 
 still roll (`object-position` 80.8% → 33.3% and 72.6% → 29.4% across their scroll ranges) but
 no longer respond to hover or click, and that hovering one exterior does not affect its
 neighbour (`inset(4%)` vs `inset(0%)`).
+
+## Planned Growth cards
+
+The left card is the **Pratt Industries Corrugating Division facility** — a photograph, not a
+rendering, so the alt text says so. It replaced a Ballard Gigafactory render that never matched
+its own caption ("$90-Million Pratt Industries Expansion") or the body copy above it.
+
+Two things had to be solved to drop it in:
+
+**The logo is a different shape.** Pratt is a 2.28:1 mark against Chocxo's 2.94:1 (Ballard's was
+6.63:1). Sizing them both at `min(62%, 250px)` of card width would have made Pratt the visibly
+heavier of the pair, so `.dev-logo-tall` sizes it at `min(50%, 205px)` — chosen to land its
+rendered height (~90px at 1440) on Chocxo's (~85px). Matching the marks on height rather than
+width is what makes the pair read as a set.
+
+**The photo fights a white overlay.** The building's own facade carries "PRATT INDUSTRIES /
+CORRUGATING DIVISION" at 36–53% across and 34–44% down — measured on the source, that is exactly
+where a centred 205×90 mark lands — and the wall behind it is white. So `.dev-media::after` lays
+a soft centred scrim (radial, `rgba(20,29,38,.62)` at the middle falling to transparent) under
+the logo, which sinks the facade lettering back and gives the white mark something to sit on.
+It is applied to **both** cards rather than just Pratt: the Chocxo render is already dark, so the
+scrim is invisible there, and both logos stay centred.
+
+`.i30-banner` is a ribbon across the top of the I-30 render — same navy, uppercase, letterspaced
+voice as `.dev-cap`, but laid over the image, so it carries its own gradient scrim and a 2px
+backdrop blur to stay legible against the sky. The image is wrapped in a `figure.i30-media`
+purely to give the banner a positioning context; the wrapper does not affect the scroll roller,
+which drives `object-position` inside the image's own box.
+
+## DFW MSA exhibit
+
+`#hl-dfw` used to hold a single flat infographic. It now holds the exhibit ported from the
+**Hyatt House Lincoln Park** build: a stat band over two skyline panels.
+
+Retoned rather than copied: navy (`--navy`) ground instead of that build's warm brown, teal
+underline instead of blue, Poppins instead of Jost, and the 8px section rhythm instead of a
+48px top margin. The four stat SVGs are white-on-transparent artwork at a uniform
+446.57 × 336.78 viewBox, so they carried over untouched, and their claims line up with the
+replacement copy — 8.5 million, No. 1 investment market, 49 Fortune 1000, 450,000 net new jobs.
+
+The reflections are the interesting part. Each wordmark SVG bakes in its own mirrored copy: the
+solid mark is the top 58.5% and the reflection the rest. So each is drawn **twice** over the
+photo, `clip-path` splitting them, and only the reflection gets `filter: url(#ripple-a)` — an
+`feTurbulence` whose `baseFrequency` is animated by SMIL, no JavaScript. `.dfw-water::before`
+adds a drifting `repeating-linear-gradient` sheen in `soft-light` over the bottom 46%. Both
+switch off under `prefers-reduced-motion`, which leaves an undistorted reflection rather than
+no reflection.
+
+The two `img.city` photos deliberately have **no** `data-zoom`: their wordmarks are positioned
+against the photo, so cropping the photo underneath a static overlay would just look broken.
+
+At ≤760px the stats fold to 2×2 (and the third cell's divider is suppressed so the hairline
+only ever appears between columns) and the photos stack.
+
+## Property labels in .sec-teal
+
+The acquisition-basis and offering photos are guestrooms at two different hotels with nothing
+on them to say which. `.alt-label` puts a navy pill bottom-left of each — TownePlace on the
+basis room, SpringHill on the offering room — matching the `.i30-banner` treatment. Each image
+picked up a `figure.alt-media` wrapper for the positioning context, which leaves the roller and
+the lightbox untouched.
 
 ## Brand logo hover
 
@@ -438,6 +499,13 @@ either way — neither effect can change an element's box.
   full-width render.
 - The original brand grid showed **Design Hotels twice**; the duplicate was dropped
   (29 unique brands render here, 30 tiles in the original).
+- `assets/ballard-rendering.webp`, `assets/logo-ballard.svg` and `assets/infographic-dfw.webp`
+  were removed once nothing referenced them. Recover from git history if any is wanted back.
+- The Pratt photo is 1200×675, smaller than the 1600px the other cards use. It renders at
+  546×331 at 1440 so it is not soft, but a larger original would be better.
+- The stat and wordmark SVGs came over stripped of their Illustrator `<metadata>` blocks:
+  the four stats 1.89 MB → 99 KB, the two wordmarks 1.15 MB → 208 KB (these keep embedded
+  `<image>` rasters, which is the remaining weight), the Pratt logo 429 KB → 7.8 KB.
 
 ## Local preview
 Dev servers can't read from `~/Downloads`, so mirror to `/tmp` first:

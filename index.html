@@ -397,10 +397,22 @@ table.spec tr:hover{background:rgba(255,255,255,.14)}
 .dev-pair{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
 .dev-card{margin:0;display:flex;flex-direction:column}
 .dev-media{position:relative;background:#000;flex:1;overflow:hidden}
+/* The Pratt photo is a bright daylight shot whose facade already carries the company
+   wordmark, so a white overlay mark centred on it both loses contrast against the
+   white wall and doubles the lettering. A soft centred scrim sinks the facade text
+   back and lifts the mark off it. It is invisible on the dark Chocxo render, so both
+   cards keep the same centred treatment. */
+.dev-media::after{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(58% 46% at 50% 50%,rgba(20,29,38,.62) 0%,rgba(20,29,38,.34) 55%,rgba(20,29,38,0) 100%);
+}
 .dev-media>img:not(.dev-logo){width:100%;height:clamp(180px,23vw,370px);object-fit:cover;opacity:.92}
 .dev-logo{
-  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;
   width:min(62%,250px);height:auto;
+}
+.dev-logo-tall{
+  width:min(50%,205px);
   filter:drop-shadow(0 2px 10px rgba(0,0,0,.45));
 }
 .dev-cap{
@@ -412,7 +424,101 @@ table.spec tr:hover{background:rgba(255,255,255,.14)}
 /* #hl-location and #hl-dfw stack a teal panel above an image; both were flush.
    Same 8px gutter as .dev-pair / .i30 / .alt. */
 #hl-location > .wrap,#hl-dfw > .wrap{display:grid;gap:8px}
+.i30-media{position:relative;margin:0;display:flex;overflow:hidden}
 .i30 img{width:100%;height:100%;min-height:clamp(180px,20vw,320px);object-fit:cover}
+/* Ribbon across the top of the I-30 render. Same navy/uppercase voice as .dev-cap,
+   but laid over the image, so it carries a scrim to stay legible on the sky. */
+.i30-banner{
+  position:absolute;left:0;right:0;top:0;
+  background:linear-gradient(rgba(49,67,86,.94),rgba(49,67,86,.82));
+  color:var(--white);text-align:center;
+  padding:clamp(10px,1.1vw,15px) 16px;
+  font-size:clamp(11px,.92vw,14.5px);font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;
+  backdrop-filter:blur(2px);
+}
+
+/* ---------- property labels on the acquisition-basis / offering photos ---------- */
+.alt-media{position:relative;margin:0;display:flex;overflow:hidden}
+.alt-label{
+  position:absolute;left:0;bottom:0;
+  background:rgba(49,67,86,.9);color:var(--white);
+  padding:clamp(9px,.95vw,13px) clamp(14px,1.5vw,22px);
+  font-size:clamp(10.5px,.85vw,13px);font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;
+  backdrop-filter:blur(2px);
+}
+@media (max-width:900px){.alt-label{font-size:10.5px;letter-spacing:.08em}}
+
+/* ---------- DFW MSA exhibit ----------
+   Ported from the Hyatt House Lincoln Park build and retoned to this palette:
+   navy ground instead of warm brown, teal underline instead of blue, Poppins
+   throughout. The stat artwork is white-on-transparent so it carries over as is.
+   The wordmark SVGs bake in their own mirrored reflection - the solid mark is the
+   top 58.5% and the reflection the rest - so each is drawn twice, clipped, and
+   only the reflection gets the turbulence displacement. */
+.dfw-exhibit{overflow:hidden}
+.dfw-band{
+  background-color:var(--navy);
+  background-image:linear-gradient(rgba(255,255,255,.014) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.014) 1px,transparent 1px);
+  background-size:3px 3px;
+  padding:clamp(26px,3.2vw,42px) clamp(20px,3vw,44px) clamp(24px,3vw,38px);
+}
+.dfw-title{display:flex;align-items:center;gap:clamp(16px,3vw,40px);margin-bottom:clamp(22px,2.8vw,36px)}
+.dfw-title span{
+  font-weight:400;font-size:clamp(18px,2.6vw,40px);letter-spacing:.02em;
+  color:var(--white);white-space:nowrap;
+}
+.dfw-title i{flex:1;height:1px;background:rgba(255,255,255,.55)}
+.dfw-stats{display:grid;grid-template-columns:repeat(4,1fr)}
+.dfw-stat{
+  position:relative;display:flex;align-items:flex-start;justify-content:center;
+  padding:clamp(10px,1.2vw,18px) clamp(8px,1.2vw,20px) clamp(20px,2.2vw,30px);
+  border-radius:5px;cursor:default;
+  transition:transform .55s cubic-bezier(.16,1,.3,1),background-color .4s ease;
+}
+.dfw-stat img{width:100%;height:auto;display:block;transition:filter .5s ease,transform .55s cubic-bezier(.16,1,.3,1)}
+.dfw-stat::after{
+  content:"";position:absolute;left:50%;bottom:10px;width:0;height:2px;
+  background:var(--teal);transform:translateX(-50%);
+  transition:width .5s cubic-bezier(.16,1,.3,1);border-radius:2px;
+}
+.dfw-stat+.dfw-stat::before{content:"";position:absolute;left:0;top:2%;height:76%;width:1px;background:rgba(255,255,255,.45)}
+@media (hover:hover){
+  .dfw-stat:hover{transform:translateY(-6px);background-color:rgba(255,255,255,.055)}
+  .dfw-stat:hover img{transform:scale(1.04);filter:drop-shadow(0 10px 22px rgba(0,0,0,.5))}
+  .dfw-stat:hover::after{width:42%}
+}
+.dfw-photos{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:var(--navy);margin-top:8px}
+.dfw-photo{position:relative;aspect-ratio:4/3;overflow:hidden}
+.dfw-photo>img.city{width:100%;height:100%;object-fit:cover}
+.dfw-word{position:absolute;left:6%;right:6%;bottom:8%;width:auto}
+.dfw-word img{width:100%;height:auto;display:block}
+.dfw-word .w-solid{clip-path:inset(0 0 41.5% 0)}
+.dfw-word .w-reflect{position:absolute;inset:0;clip-path:inset(58.5% -14px -22px -14px)}
+.dfw-photo .ripple-a .w-reflect{filter:url(#ripple-a)}
+.dfw-photo .ripple-b .w-reflect{filter:url(#ripple-b)}
+/* soft moving sheen across the water itself */
+.dfw-water{position:absolute;left:0;right:0;bottom:0;height:46%;pointer-events:none;overflow:hidden}
+.dfw-water::before{
+  content:"";position:absolute;left:-25%;right:-25%;top:-30%;bottom:-30%;
+  background:repeating-linear-gradient(179deg,rgba(255,255,255,0) 0 8px,rgba(255,255,255,.11) 8px 11px,rgba(255,255,255,0) 11px 21px);
+  mix-blend-mode:soft-light;animation:waterDrift 10s linear infinite;
+}
+.dfw-photo:nth-child(2) .dfw-water::before{animation-duration:13s;animation-direction:reverse}
+@keyframes waterDrift{from{transform:translate3d(0,0,0)}to{transform:translate3d(0,21px,0)}}
+@media (prefers-reduced-motion:reduce){
+  .dfw-stat,.dfw-stat img,.dfw-stat::after{transition:none}
+  .dfw-water{display:none}
+  .dfw-photo .ripple-a .w-reflect,.dfw-photo .ripple-b .w-reflect{filter:none}
+}
+@media (max-width:760px){
+  .dfw-stats{grid-template-columns:1fr 1fr}
+  .dfw-stat:nth-child(3)::before{display:none}
+  .dfw-photos{grid-template-columns:1fr}
+  .dfw-title span{white-space:normal;font-size:17px}
+}
 
 /* ---------- brand grid ---------- */
 /* ---------- brand affiliation ----------
@@ -536,7 +642,7 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
 <section class="overview" id="overview">
   <div class="wrap narrow">
     <p>Hodges Ward Elliott (&ldquo;HWE&rdquo;) is pleased to present the opportunity to acquire the fee-simple interests in the <strong>105-key SpringHill Suites Dallas Rockwall</strong> and the <strong>112-key TownePlace Suites Dallas Rockwall</strong> (&ldquo;Properties&rdquo; or &ldquo;Hotels&rdquo;), developed in 2017 and 2022, respectively. The well-performing, premium-branded Hotels offer a compelling opportunity in one of Dallas&rsquo; most affluent and fastest-growing communities.</p>
-    <p>Positioned on Lake Ray Hubbard, Rockwall provides a perfect blend of a lakefront destination and urban commercial development, with a population growth far surpassing the national average. Rockwall County was ranked the #2 fastest-growing county in the country by U.S. News in 2024, increasing over 27% from 2020 to 2024. The area continues to experience strong corporate, leisure, and group travel activity by way of its strong entertainment options, growing technology park, favorable business climate, and proximity to Dallas&rsquo; city center.</p>
+    <p>Positioned on Lake Ray Hubbard, Rockwall provides a perfect blend of a lakefront destination and urban commercial development, with a population growth far surpassing the national average. Rockwall County was ranked the #2 fastest-growing county in the country by U.S. News in 2024, and has continued to grow at a rapid pace, increasing over 30% from 2020 to 2025. The area continues to experience strong corporate, leisure, and group travel activity by way of its strong entertainment options, growing technology park, favorable business climate, and proximity to Dallas’ city center.&nbsp;</p>
     <p>The Properties are available for purchase as a single portfolio or on an individual basis.</p>
   </div>
   <div class="wrap cta-row">
@@ -720,17 +826,17 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
   <div class="wrap">
     <div class="panel-white">
       <h2 style="color:var(--teal)">Planned Growth in Rockwall</h2>
-      <p>Rockwall is set to have multiple major developments constructed over the next few years. With <strong>over 2.86 million workers</strong> within a 45-minute drive, major employers and commercial developers are consistently choosing to locate in the area. Among these are the <strong>$200-million Ballard Gigafactory</strong> and the <strong>$21-million Chocxo Chocolate Factory</strong>. These large and unique investment opportunities highlight the types of opportunities Rockwall is expected to continue its trend of high growth.</p>
+      <p>Rockwall is set to have multiple major developments constructed over the next few years. With over 2.92 million workers within a 45-minute drive, major employers and commercial developers are consistently choosing to locate in the area. Among these are the $90-million Pratt Industries Expansion and the $21-million Chocxo Chocolate Factory. These large and unique investment opportunities highlight the types of opportunities Rockwall is expected to continue its trend of high growth.&nbsp;</p>
     </div>
 
     <div class="dev-pair">
       <figure class="dev-card">
         <div class="dev-media">
-          <img src="assets/ballard-rendering.webp" width="1600" height="900" loading="lazy"
-               alt="Rendering of the planned Ballard Gigafactory in Rockwall, Texas" data-px data-roll data-zoom>
-          <img class="dev-logo" src="assets/logo-ballard.svg" alt="Ballard">
+          <img src="assets/pratt-facility.webp" width="1200" height="675" loading="lazy"
+               alt="The Pratt Industries Corrugating Division facility in Rockwall, Texas" data-px data-roll data-zoom>
+          <img class="dev-logo dev-logo-tall" src="assets/logo-pratt.svg" alt="Pratt Industries">
         </div>
-        <figcaption class="dev-cap">$200-Million Ballard Gigafactory</figcaption>
+        <figcaption class="dev-cap">$90-Million Pratt Industries Expansion</figcaption>
       </figure>
       <figure class="dev-card">
         <div class="dev-media">
@@ -746,8 +852,11 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
       <div class="panel-white">
         <p>The State of Texas is also contributing <strong>$1.5 billion in planned roadway improvements</strong> over the next several years, <strong>including $750 million planned for the widening of I-30 across Lake Ray Hubbard and Rockwall County.</strong></p>
       </div>
-      <img src="assets/i30-rendering.webp" width="1600" height="800" loading="lazy"
-           alt="Rendering of the planned Interstate 30 widening across Lake Ray Hubbard in Rockwall County" data-roll data-zoom>
+      <figure class="i30-media">
+        <img src="assets/i30-rendering.webp" width="1600" height="800" loading="lazy"
+             alt="Rendering of the planned Interstate 30 widening across Lake Ray Hubbard in Rockwall County" data-roll data-zoom>
+        <figcaption class="i30-banner">Planned I-30 Expansion</figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -759,7 +868,7 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
     <div class="brand-copy">
       <h2>Recent Vintage, Premium-Branded Hotels</h2>
       <p>The TownePlace Suites, delivered in 2022, and the SpringHill Suites, delivered in 2017, represent two of the newest deliveries in Rockwall. Offering state-of-the-art construction and two of the most recognized brands in the world, these Hotels have been institutionally maintained and operated since their inception.</p>
-      <p>The Properties benefit from their affiliation with Marriott, the world&rsquo;s most recognizable and top-performing hospitality brand. Marriott provides centralized marketing, booking, and rewards systems, providing the Hotel with access to <strong>over 237 million Marriott Bonvoy members</strong>.</p>
+      <p>The Properties benefit from their affiliation with Marriott, the world&rsquo;s most recognizable and top-performing hospitality brand. Marriott provides centralized marketing, booking, and rewards systems, providing the Hotel with access to <strong>over 295 million Marriott Bonvoy members</strong>.</p>
     </div>
     <div class="brand-marks">
       <a class="brand-mark" href="#prop-shs">
@@ -820,13 +929,39 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
   <div class="wrap">
     <div class="panel-teal">
       <h2>Major Part of the Fourth Largest Metro Area in the U.S.</h2>
-      <p>The Hotels are situated within the Dallas-Fort Worth metroplex, just off Interstate 30, less than 23 miles to Downtown Dallas, and within an hour&rsquo;s drive to six municipal and international airports. As of the last 2024 estimates, the Dallas-Fort Worth-Arlington MSA had a <strong>total population eclipsing 8.3 million people</strong>.</p>
-      <p>DFW, <strong>the fourth largest metropolitan area in the United States</strong>, consistently <strong>leads the nation in population and job growth</strong>. In 2023, DFW lead the entire country in population growth adding approximately 153,000 residents in a year when most large cities experienced substantial contractions. The metropolitan area continued the meaningful progression in 2024, adding approximately 178,000 residents. As further testament of its prowess, <strong>DFW was ranked as the No. 1 investment market in the United States</strong> for the fourth consecutive year according to CBRE&rsquo;s 2025 Americas Investor Intentions Survey.</p>
+      <p>The Hotel sits within the Dallas-Fort Worth MSA, <strong>the fourth-largest metropolitan area in the United States</strong>, with a population of approximately 8.5 million. The region has <strong>led the nation in workforce growth this decade</strong>, adding roughly 450,000 net new jobs. In addition, DFW led the country in population growth in 2023, adding approximately 191,000 residents, and has ranked among the nation&rsquo;s top metros for numeric gains every year since, adding approximately 189,000 residents in 2024 and 124,000 in 2025, <strong>a cumulative increase of more than 500,000 people in three years</strong>. As further testament to its prowess, <strong>DFW was ranked the No. 1 investment market in the United States</strong> for the fifth consecutive year in CBRE&rsquo;s 2026 North America Investor Intentions Survey, and the region is home to <strong>49 Fortune 1000 headquarters</strong>.</p>
     </div>
-    <figure class="fig">
-      <img src="assets/infographic-dfw.webp" width="2400" height="1235" loading="lazy"
-           alt="Dallas skyline infographic: #1 MSA in the U.S. for job recovery beyond pre-pandemic high (Bureau of Labor Statistics, 2023); 4th largest metro in the U.S.; #6 of 500 most innovative cities in the world (2thinknow, 2021); more people live in DFW than in 39 states (D Magazine, 2022); 23 Fortune 500 company headquarters (Fortune, 2023); visited by 68.4 million tourists each year (VisitDallas.com, 2023); DFW gained more people over the past decade than any other U.S. metro (U.S. Census Bureau, 2022); 3 Global 50 companies, second most in the world (Bureau of Labor Statistics, 2023); #2 metro in the country for job growth (Bureau of Labor Statistics, 2023); 3rd busiest airport in the world (Airports Council International, 2023)." data-zoom class="zoom-flat">
-    </figure>
+    <!-- Ported from the Hyatt House Lincoln Park build: the MSA stat band plus the
+         two skyline panels, whose wordmarks carry a displaced reflection in the water. -->
+    <div class="dfw-exhibit">
+      <div class="dfw-band">
+        <div class="dfw-title"><i></i><span>DALLAS-FORT WORTH MSA</span><i></i></div>
+        <div class="dfw-stats">
+          <div class="dfw-stat"><img src="assets/dfw-stat-01.svg" width="447" height="337" loading="lazy" alt="Dallas-Fort Worth MSA had a total population eclipsing 8.5 million people"></div>
+          <div class="dfw-stat"><img src="assets/dfw-stat-02.svg" width="447" height="337" loading="lazy" alt="DFW ranked #1 investment market in the United States"></div>
+          <div class="dfw-stat"><img src="assets/dfw-stat-03.svg" width="447" height="337" loading="lazy" alt="49 Fortune 1000 headquarters"></div>
+          <div class="dfw-stat"><img src="assets/dfw-stat-04.svg" width="447" height="337" loading="lazy" alt="450,000 net new jobs since 2020, #1 of any metro in the U.S."></div>
+        </div>
+      </div>
+      <div class="dfw-photos">
+        <div class="dfw-photo">
+          <img class="city" src="assets/dallas-skyline.webp" width="1600" height="1501" loading="lazy" alt="The Dallas skyline at dusk">
+          <div class="dfw-water" aria-hidden="true"></div>
+          <div class="dfw-word ripple-a">
+            <img class="w-solid" src="assets/dallas-words.svg" alt="Dallas">
+            <img class="w-reflect" src="assets/dallas-words.svg" alt="" aria-hidden="true">
+          </div>
+        </div>
+        <div class="dfw-photo">
+          <img class="city" src="assets/fort-worth.webp" width="1600" height="1724" loading="lazy" alt="The Fort Worth skyline at dusk">
+          <div class="dfw-water" aria-hidden="true"></div>
+          <div class="dfw-word ripple-b">
+            <img class="w-solid" src="assets/fortworth-words.svg" alt="Fort Worth">
+            <img class="w-reflect" src="assets/fortworth-words.svg" alt="" aria-hidden="true">
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -838,13 +973,19 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
         <h3>Attractive Acquisition Basis</h3>
         <p>The anticipated transaction price(s) place a new owner&rsquo;s all-in basis significantly below replacement cost allowing an investor to benefit substantially from a combination of location in a growing economy and upside opportunity.</p>
       </div>
-      <img src="assets/basis-room.webp" width="1600" height="1067" loading="lazy"
-           alt="Double queen guestroom with wood-plank accent wall at TownePlace Suites Dallas Rockwall" data-roll data-zoom>
+      <figure class="alt-media">
+        <img src="assets/basis-room.webp" width="1600" height="1067" loading="lazy"
+             alt="Double queen guestroom with wood-plank accent wall at TownePlace Suites Dallas Rockwall" data-roll data-zoom>
+        <figcaption class="alt-label">TownePlace Suites Dallas Rockwall</figcaption>
+      </figure>
     </article>
 
     <article class="alt flip" id="hl-offering">
-      <img src="assets/offering-room.webp" width="1600" height="1067" loading="lazy"
-           alt="King guestroom with glass-partition bath and lounge seating at SpringHill Suites Dallas Rockwall" data-roll data-zoom>
+      <figure class="alt-media">
+        <img src="assets/offering-room.webp" width="1600" height="1067" loading="lazy"
+             alt="King guestroom with glass-partition bath and lounge seating at SpringHill Suites Dallas Rockwall" data-roll data-zoom>
+        <figcaption class="alt-label">SpringHill Suites Dallas Rockwall</figcaption>
+      </figure>
       <div class="panel-white">
         <h3>Optimal Offering &ndash; Fee Simple, Non-Union, Unencumbered By Management</h3>
         <p>The Properties are offered fee simple and free and clear of existing management, affording new ownership maximum optionality in the future operation and capitalization of the Hotels, available for purchase individually or as a portfolio.</p>
@@ -1063,7 +1204,7 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
   /* ---- slow scale-in ---- */
   var RISE = ['.prop','.tri-under','#hl-location .panel-teal','#hl-location > .wrap > img',
               '#hl-growth .panel-white','.dev-pair','.i30','.brand-copy',
-              '.brand-box','#hl-dfw .panel-teal','#hl-dfw .fig','.alt'].join(',');
+              '.brand-box','#hl-dfw .panel-teal','#hl-dfw .dfw-exhibit','.alt'].join(',');
   var blocks = [].slice.call(document.querySelectorAll(RISE));
   if (blocks.length && !reduce && 'IntersectionObserver' in window) {
     document.documentElement.classList.add('js-rise');
@@ -1080,6 +1221,26 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
 
 })();
 </script>
+
+<!-- Water-ripple filters for the DFW wordmark reflections. SMIL-animated, no JS. -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+  <defs>
+    <filter id="ripple-a" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.010 0.048" numOctaves="2" seed="7" result="n">
+        <animate attributeName="baseFrequency" dur="9s" repeatCount="indefinite"
+                 values="0.010 0.048;0.017 0.082;0.008 0.038;0.010 0.048"/>
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="9" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="ripple-b" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.042" numOctaves="2" seed="23" result="n">
+        <animate attributeName="baseFrequency" dur="11.5s" repeatCount="indefinite"
+                 values="0.012 0.042;0.008 0.076;0.015 0.036;0.012 0.042"/>
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="8" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+</svg>
 
 <dialog class="lightbox" aria-label="Enlarged image">
   <button type="button" class="lightbox-close" aria-label="Close enlarged image">&times;</button>
