@@ -15,7 +15,7 @@
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poltawski+Nowy:wght@700&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --teal:#64899c;
@@ -272,6 +272,9 @@ table.spec tr:hover{background:rgba(255,255,255,.14)}
   transition:color .25s ease;
 }
 .conc-pct sup{font-size:.4em;font-weight:700;vertical-align:super;line-height:0}
+/* Poltawski Nowy is a serif; it falls back to Poppins rather than a system serif so a
+   failed webfont degrades to the surrounding type instead of clashing with it. */
+.conc-num{font-family:'Poltawski Nowy','Poppins',sans-serif;font-weight:700}
 .conc-arrow{width:5.6cqw;height:auto;justify-self:end;fill:var(--teal);
   transition:fill .25s ease,transform .3s cubic-bezier(.34,1.4,.64,1)}
 .conc-foot{

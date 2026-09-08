@@ -231,6 +231,19 @@ cannot reach its neighbour. There is a `:focus-visible` outline for keyboard use
 anchor carries a visually-hidden "jump to the property snapshot" so the link's purpose is not
 left to the logo's alt text alone.
 
+## Concentrations number face
+
+`.conc-num` — the percentage digits only — is set in **Poltawski Nowy 700**, loaded from
+Google Fonts alongside Poppins. The API family name has no diacritics
+(`family=Poltawski+Nowy:wght@700`); the accented spelling returns HTTP 400.
+
+It falls back to `Poppins` rather than a system serif, so a failed webfont degrades to the
+surrounding type instead of clashing with it.
+
+Note the `%` and the `*` sit **outside** `.conc-num`, in `.conc-pct`, so they stay in Poppins
+800 — the digits are serif and the percent sign is not. Move the declaration to `.conc-pct`
+if the whole figure should change.
+
 ## Brand logo hover
 
 The 29 `assets/brands/` marks lift on hover — opacity `.88 → 1` and `scale(1.14)`, 250/300ms.
