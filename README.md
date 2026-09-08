@@ -527,10 +527,30 @@ either way — neither effect can change an element's box.
   `<image>` rasters, which is the remaining weight), the Pratt logo 429 KB → 7.8 KB.
 
 ## Local preview
-Dev servers can't read from `~/Downloads`, so mirror to `/tmp` first:
+
+The dev server process cannot read `~/Downloads` **at all** — it is denied even `getcwd`, so
+every request 404s and the log opens with
+`shell-init: error retrieving current directory: Operation not permitted`. Starting the
+process from a permitted directory is not enough; it has to be handed a copy under `/tmp`.
+
 ```
 rm -rf /tmp/rockwall-preview && mkdir -p /tmp/rockwall-preview
-cp -R site/. /tmp/rockwall-preview/
-python3 -m http.server 8943 -d /tmp/rockwall-preview
+(cd site && tar --exclude='.git' -cf - .) | (cd /tmp/rockwall-preview && tar -xf -)
 ```
-A `rockwall-microsite` entry in `../../.claude/launch.json` does this on port 8943.
+Then start the `rockwall-microsite` entry in `../../.claude/launch.json`, which serves
+`/tmp/rockwall-preview` on port 8943.
+
+**The mirror is a snapshot, not a live view.** Re-run the copy after every edit or the preview
+shows stale markup — a mismatch that has cost real debugging time here, since a stale page
+looks exactly like a broken change. The sibling entries in that launch file follow the same
+pattern (`/tmp/courtyard-stl-preview`, `/tmp/springhillsuites-preview`, `/tmp/xx-tests-preview`,
+`/tmp/hhlp-preview`, `/tmp/aloft-preview`).
+
+Two measurement traps worth knowing, both of which have produced false "broken image" reports:
+
+- **Lazy loading.** Jumping the scroll position in large steps does not fire Chrome's lazy
+  loader, so `loading="lazy"` images below the fold report `complete: false` and
+  `naturalWidth: 0` while serving 200 perfectly. To audit images, set `loading = 'eager'` on
+  every one and await their load/error events rather than trusting a scroll walk.
+- **Background tabs.** A tab that is not fronted defers image loading entirely. Front the tab
+  before measuring anything about layout or loading.
