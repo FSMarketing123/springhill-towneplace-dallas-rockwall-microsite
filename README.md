@@ -327,11 +327,27 @@ the logo, which sinks the facade lettering back and gives the white mark somethi
 It is applied to **both** cards rather than just Pratt: the Chocxo render is already dark, so the
 scrim is invisible there, and both logos stay centred.
 
-`.i30-banner` is a ribbon across the top of the I-30 render — same navy, uppercase, letterspaced
-voice as `.dev-cap`, but laid over the image, so it carries its own gradient scrim and a 2px
-backdrop blur to stay legible against the sky. The image is wrapped in a `figure.i30-media`
-purely to give the banner a positioning context; the wrapper does not affect the scroll roller,
-which drives `object-position` inside the image's own box.
+The I-30 render carries an `.img-banner` along its bottom edge — see below. The image is
+wrapped in a `figure.i30-media` purely to give the banner a positioning context; the wrapper
+does not affect the scroll roller, which drives `object-position` inside the image's own box.
+
+## .img-banner
+
+One class for every banner laid over an image: the I-30 render and both guestroom photos in
+`.sec-teal`. It is `.dev-cap` moved onto the image — solid `--navy`, centred, 12.5px/600, no
+letterspacing or uppercasing, the same `14px 12px` padding and 50px floor — so a caption
+beneath a development card and a banner over a photo are the same object, differing only in
+placement. Verified by diffing the computed `font-size`, `font-weight`, `letter-spacing`,
+`text-transform`, `text-align`, `padding`, `min-height`, `color`, `background-color` and
+`font-family` of the two: no mismatches.
+
+It first shipped as a letterspaced uppercase ribbon across the *top* of the I-30 image with a
+gradient scrim and a 2px backdrop blur. Both went: the placement because the bottom edge is
+where the other banners live, and the translucency because at 92% it read a shade off its
+solid siblings for no legibility gain — the bar is opaque enough to carry the type by itself.
+
+The banner covers the bottom 50px of its image, which is 23% of the guestroom photos and 28%
+of the I-30 render at 375px, and every string stays on one line down to that width.
 
 ## DFW MSA exhibit
 
@@ -361,10 +377,13 @@ only ever appears between columns) and the photos stack.
 ## Property labels in .sec-teal
 
 The acquisition-basis and offering photos are guestrooms at two different hotels with nothing
-on them to say which. `.alt-label` puts a navy pill bottom-left of each — TownePlace on the
-basis room, SpringHill on the offering room — matching the `.i30-banner` treatment. Each image
-picked up a `figure.alt-media` wrapper for the positioning context, which leaves the roller and
-the lightbox untouched.
+on them to say which, so each carries an `.img-banner` naming it — TownePlace on the basis
+room, SpringHill on the offering room. Each image picked up a `figure.alt-media` wrapper for
+the positioning context, which leaves the roller and the lightbox untouched (both confirmed
+still working after the wrap).
+
+These began as a smaller left-aligned pill and were folded into `.img-banner` so all three
+banners on the page are one treatment.
 
 ## Brand logo hover
 
