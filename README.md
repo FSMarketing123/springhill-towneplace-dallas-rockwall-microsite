@@ -267,9 +267,14 @@ so it works by click and by keyboard and gets a focus ring; the animation stops 
 
 ## Click to enlarge
 
-The 16 scroll-parallax images (`[data-roll]`) get a **soft hover zoom** —
-`object-view-box: inset(4%)` over 550ms, which crops inside the element box so the image
-cannot grow past its frame — and open in a **native `<dialog>`** on click.
+Eighteen images carry `data-zoom`: a **soft hover zoom** — `object-view-box: inset(4%)` over
+550ms, which crops inside the element box so the image cannot grow past its frame — plus a
+**native `<dialog>`** on click.
+
+`data-zoom` is deliberately a **separate hook from `data-roll`**. The two sets overlap but are
+not the same: the lobby band and the Harbor aerial scroll-roll without any hover or popout,
+while the two property exteriors, the annotated aerial map and the DFW infographic pop out
+without rolling. Driving both off one attribute could not express that.
 
 `<dialog>` + `showModal()` was chosen over a hand-rolled overlay because it brings Esc-to-close,
 focus trapping and focus restore for free. Backdrop-click close is added by hand, since
@@ -280,14 +285,25 @@ The attributes that advertise the images as activatable (`role="button"`, `tabin
 `aria-label` = alt + " — enlarge", `cursor: zoom-in`) are applied **by the script**, so
 without JS they stay plain images rather than lying about being buttons.
 
-Verified: opens on click and on Enter, closes via the button and via backdrop click, image
-scales to fit (1286px wide at 1440, 353px at 375). Esc relies on the native dialog cancel
-behaviour, which synthetic `KeyboardEvent`s do not exercise — the dialog is confirmed a true
-modal (`:modal` matches), so it applies.
+### The two text-bearing graphics get the popout but not the crop
 
-The annotated aerial map and the DFW infographic are **not** included — they carry no
-`data-roll`. They would arguably benefit most from enlarging; add `data-roll` or a separate
-hook if wanted.
+`aerial-map.webp` and `infographic-dfw.webp` carry `.zoom-flat`, which opts them out of the
+hover crop while keeping the click-to-enlarge. Their labels are baked into the bitmap and run
+right to the edges, so a 4% inset removes copy rather than framing it. Measured on the source
+files: on the infographic, ink reaches all four edges and the top of "DFW GAINED MORE" sits
+1.05% from the top edge; on the map, the DALLAS DOWNTOWN callout starts 2.13% down. Both are
+inside a 4% crop. This is the same reason these two were held back from the scroll roller.
+
+If the crop is wanted anyway, the ceiling is roughly 1% and only on the top edge — not enough
+to read as an effect. The alternative is re-exporting both with a transparent margin.
+
+Verified: opens on click, on Enter and on tap at 375; closes via the button, via backdrop click
+and via Esc; image scales to fit (1286px wide at 1440, 353px at 375). Esc is belt-and-braces —
+the native close request handles it, and an explicit `keydown` handler backs it up because that
+UA signal does not always arrive under automation. Confirmed the lobby band and Harbor aerial
+still roll (`object-position` 80.8% → 33.3% and 72.6% → 29.4% across their scroll ranges) but
+no longer respond to hover or click, and that hovering one exterior does not affect its
+neighbour (`inset(4%)` vs `inset(0%)`).
 
 ## Brand logo hover
 
@@ -351,8 +367,9 @@ scale only ever runs **up to** 1, never past it, so nothing overflows its box �
 this needs no clipping wrappers. The hidden state is gated behind a `.js-rise` class that the
 script adds, so the page renders fully if the script never runs.
 
-**Images have no hover effect.** The `object-view-box` hover zoom was removed at request;
-`data-hpx` and its `@supports` block are gone entirely. Images respond to scroll only.
+**Hover on images** is the `object-view-box` crop on `[data-zoom]` only — see *Click to
+enlarge*. The earlier `data-hpx` hover-parallax variant was removed at request and is gone
+entirely; hover never shifts an image, it only crops in.
 
 **Scroll roller and zoom** — see below.
 
@@ -396,6 +413,8 @@ image on load and on resize. At 1440px, 13 roll on Y and 4 on X; at 375px all 18
 | `data-px-from` / `data-px-to` | Zoom range in percent (`40` = `scale(1.4)`) |
 | `data-px-mode="top"` | Progress measured from the top of the document. Hero only — it is already on screen at load and must start at zoom 0 |
 | `data-roll` | Roller. Defaults 82% → 18% |
+| `data-zoom` | Hover crop + click to enlarge. Independent of `data-roll` |
+| `.zoom-flat` | On a `data-zoom` image: popout only, no hover crop. For graphics with edge-to-edge baked-in text |
 | `data-roll-from` / `data-roll-to` | Roller range in percent |
 
 Easing is smoothstep (`t²(3−2t)`) — slow in, slow out — for both effects.

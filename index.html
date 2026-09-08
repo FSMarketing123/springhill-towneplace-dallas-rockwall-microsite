@@ -131,11 +131,11 @@ p:last-child{margin-bottom:0}
    past its frame), and a native <dialog> for the enlarged view. */
 @supports (object-view-box: inset(0%)){
   @media (hover:hover){
-    [data-roll]{object-view-box:inset(0%);transition:object-view-box .55s cubic-bezier(.22,.85,.3,1)}
-    [data-roll]:hover{object-view-box:inset(4%)}
+    [data-zoom]:not(.zoom-flat){object-view-box:inset(0%);transition:object-view-box .55s cubic-bezier(.22,.85,.3,1)}
+    [data-zoom]:not(.zoom-flat):hover{object-view-box:inset(4%)}
   }
 }
-[data-roll].is-zoomable{cursor:zoom-in}
+[data-zoom].is-zoomable{cursor:zoom-in}
 .lightbox{
   border:0;padding:0;margin:auto;background:transparent;
   max-width:min(94vw,1680px);max-height:94vh;overflow:visible;
@@ -156,8 +156,8 @@ p:last-child{margin-bottom:0}
 @media (max-width:600px){.lightbox-close{top:-8px;right:-8px;width:34px;height:34px;font-size:19px}}
 @media (prefers-reduced-motion:reduce){
   .scroll-cue-run{animation:none;top:auto;bottom:0}
-  [data-roll]{transition:none}
-  [data-roll]:hover{object-view-box:inset(0%)}
+  [data-zoom]:not(.zoom-flat){transition:none}
+  [data-zoom]:not(.zoom-flat):hover{object-view-box:inset(0%)}
 }
 
 /* ---------- overview ---------- */
@@ -558,7 +558,7 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
 
       <article class="prop" id="prop-shs">
         <img class="exterior" src="assets/shs-exterior.webp" width="1600" height="1067" loading="lazy"
-             alt="SpringHill Suites Dallas Rockwall exterior and porte-cochère at dusk">
+             alt="SpringHill Suites Dallas Rockwall exterior and porte-cochère at dusk" data-zoom>
         <div class="prop-panel">
           <img class="lockup" src="assets/logo-shs-white.svg" alt="SpringHill Suites Dallas Rockwall">
           <table class="spec">
@@ -577,20 +577,20 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
         </div>
         <div class="prop-pair">
           <img src="assets/shs-pool.webp" width="1000" height="667" loading="lazy"
-               alt="Outdoor pool and courtyard at SpringHill Suites Dallas Rockwall, lit at night" data-roll>
+               alt="Outdoor pool and courtyard at SpringHill Suites Dallas Rockwall, lit at night" data-roll data-zoom>
           <img src="assets/shs-lounge.webp" width="1000" height="667" loading="lazy"
-               alt="Lobby lounge seating and market pantry at SpringHill Suites Dallas Rockwall" data-roll>
+               alt="Lobby lounge seating and market pantry at SpringHill Suites Dallas Rockwall" data-roll data-zoom>
         </div>
         <div class="prop-room">
           <img src="assets/shs-room.webp" width="1600" height="1067" loading="lazy"
-               alt="Double queen guestroom with glass-partition bath at SpringHill Suites Dallas Rockwall" data-roll>
+               alt="Double queen guestroom with glass-partition bath at SpringHill Suites Dallas Rockwall" data-roll data-zoom>
           <p class="prop-cap">SpringHill Suites Dallas Rockwall</p>
         </div>
       </article>
 
       <article class="prop" id="prop-tps">
         <img class="exterior" src="assets/tps-exterior.webp" width="1600" height="1068" loading="lazy"
-             alt="TownePlace Suites Dallas Rockwall exterior and entrance at dusk">
+             alt="TownePlace Suites Dallas Rockwall exterior and entrance at dusk" data-zoom>
         <div class="prop-panel">
           <img class="lockup" src="assets/logo-tps-white.svg" alt="TownePlace Suites Dallas Rockwall">
           <table class="spec">
@@ -609,13 +609,13 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
         </div>
         <div class="prop-pair">
           <img src="assets/tps-pool.webp" width="1000" height="667" loading="lazy"
-               alt="Outdoor pool deck and lounge chairs at TownePlace Suites Dallas Rockwall" data-roll>
+               alt="Outdoor pool deck and lounge chairs at TownePlace Suites Dallas Rockwall" data-roll data-zoom>
           <img src="assets/tps-lounge.webp" width="1000" height="667" loading="lazy"
-               alt="Lobby lounge with blue armchairs and workspace at TownePlace Suites Dallas Rockwall" data-roll>
+               alt="Lobby lounge with blue armchairs and workspace at TownePlace Suites Dallas Rockwall" data-roll data-zoom>
         </div>
         <div class="prop-room">
           <img src="assets/tps-room.webp" width="1600" height="1067" loading="lazy"
-               alt="King studio suite with sofa and window at TownePlace Suites Dallas Rockwall" data-roll>
+               alt="King studio suite with sofa and window at TownePlace Suites Dallas Rockwall" data-roll data-zoom>
           <p class="prop-cap">TownePlace Suites Dallas Rockwall</p>
         </div>
       </article>
@@ -692,12 +692,12 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
   </div>
   <div class="wrap tri tri-under">
     <img class="tri-top" src="assets/aerial-residential.webp" width="1800" height="1058" loading="lazy"
-         alt="Aerial view of established residential neighborhoods along the Rockwall shoreline of Lake Ray Hubbard" data-roll>
+         alt="Aerial view of established residential neighborhoods along the Rockwall shoreline of Lake Ray Hubbard" data-roll data-zoom>
     <div class="tri-pair">
       <img src="assets/marina.webp" width="1600" height="1002" loading="lazy"
-           alt="Marina docks and the Rockwall lighthouse at The Harbor on Lake Ray Hubbard" data-roll>
+           alt="Marina docks and the Rockwall lighthouse at The Harbor on Lake Ray Hubbard" data-roll data-zoom>
       <img src="assets/harbor-fountain.webp" width="1600" height="1067" loading="lazy"
-           alt="Fountains and waterfront promenade at The Harbor in Rockwall, Texas" data-roll>
+           alt="Fountains and waterfront promenade at The Harbor in Rockwall, Texas" data-roll data-zoom>
     </div>
   </div>
 </section>
@@ -711,7 +711,7 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
       <p><strong>Lake Ray Hubbard</strong> (23,000 acres) and the surrounding area provides a wide variety of entertainment options to pursue including waterfront dining, global retailers, fitness trails, and multiple sports complexes.</p>
     </div>
     <img src="assets/aerial-map.webp" width="1657" height="1223" loading="lazy"
-         alt="Annotated aerial map showing the SpringHill Suites and TownePlace Suites along Interstate 30 in Rockwall, with Downtown Dallas to the west across Lake Ray Hubbard">
+         alt="Annotated aerial map showing the SpringHill Suites and TownePlace Suites along Interstate 30 in Rockwall, with Downtown Dallas to the west across Lake Ray Hubbard" data-zoom class="zoom-flat">
   </div>
 </section>
 
@@ -727,7 +727,7 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
       <figure class="dev-card">
         <div class="dev-media">
           <img src="assets/ballard-rendering.webp" width="1600" height="900" loading="lazy"
-               alt="Rendering of the planned Ballard Gigafactory in Rockwall, Texas" data-px data-roll>
+               alt="Rendering of the planned Ballard Gigafactory in Rockwall, Texas" data-px data-roll data-zoom>
           <img class="dev-logo" src="assets/logo-ballard.svg" alt="Ballard">
         </div>
         <figcaption class="dev-cap">$200-Million Ballard Gigafactory</figcaption>
@@ -735,7 +735,7 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
       <figure class="dev-card">
         <div class="dev-media">
           <img src="assets/chocxo-rendering.webp" width="1600" height="900" loading="lazy"
-               alt="Rendering of the planned Chocxo chocolate factory and Chewters Chocolates building in Rockwall, Texas" data-px data-roll>
+               alt="Rendering of the planned Chocxo chocolate factory and Chewters Chocolates building in Rockwall, Texas" data-px data-roll data-zoom>
           <img class="dev-logo" src="assets/logo-chocxo.svg" alt="Chocxo — Simply Better Chocolate">
         </div>
         <figcaption class="dev-cap">$21-Million Chocxo Chocolate Factory</figcaption>
@@ -747,7 +747,7 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
         <p>The State of Texas is also contributing <strong>$1.5 billion in planned roadway improvements</strong> over the next several years, <strong>including $750 million planned for the widening of I-30 across Lake Ray Hubbard and Rockwall County.</strong></p>
       </div>
       <img src="assets/i30-rendering.webp" width="1600" height="800" loading="lazy"
-           alt="Rendering of the planned Interstate 30 widening across Lake Ray Hubbard in Rockwall County" data-roll>
+           alt="Rendering of the planned Interstate 30 widening across Lake Ray Hubbard in Rockwall County" data-roll data-zoom>
     </div>
   </div>
 </section>
@@ -825,7 +825,7 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
     </div>
     <figure class="fig">
       <img src="assets/infographic-dfw.webp" width="2400" height="1235" loading="lazy"
-           alt="Dallas skyline infographic: #1 MSA in the U.S. for job recovery beyond pre-pandemic high (Bureau of Labor Statistics, 2023); 4th largest metro in the U.S.; #6 of 500 most innovative cities in the world (2thinknow, 2021); more people live in DFW than in 39 states (D Magazine, 2022); 23 Fortune 500 company headquarters (Fortune, 2023); visited by 68.4 million tourists each year (VisitDallas.com, 2023); DFW gained more people over the past decade than any other U.S. metro (U.S. Census Bureau, 2022); 3 Global 50 companies, second most in the world (Bureau of Labor Statistics, 2023); #2 metro in the country for job growth (Bureau of Labor Statistics, 2023); 3rd busiest airport in the world (Airports Council International, 2023).">
+           alt="Dallas skyline infographic: #1 MSA in the U.S. for job recovery beyond pre-pandemic high (Bureau of Labor Statistics, 2023); 4th largest metro in the U.S.; #6 of 500 most innovative cities in the world (2thinknow, 2021); more people live in DFW than in 39 states (D Magazine, 2022); 23 Fortune 500 company headquarters (Fortune, 2023); visited by 68.4 million tourists each year (VisitDallas.com, 2023); DFW gained more people over the past decade than any other U.S. metro (U.S. Census Bureau, 2022); 3 Global 50 companies, second most in the world (Bureau of Labor Statistics, 2023); #2 metro in the country for job growth (Bureau of Labor Statistics, 2023); 3rd busiest airport in the world (Airports Council International, 2023)." data-zoom class="zoom-flat">
     </figure>
   </div>
 </section>
@@ -839,12 +839,12 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
         <p>The anticipated transaction price(s) place a new owner&rsquo;s all-in basis significantly below replacement cost allowing an investor to benefit substantially from a combination of location in a growing economy and upside opportunity.</p>
       </div>
       <img src="assets/basis-room.webp" width="1600" height="1067" loading="lazy"
-           alt="Double queen guestroom with wood-plank accent wall at TownePlace Suites Dallas Rockwall" data-roll>
+           alt="Double queen guestroom with wood-plank accent wall at TownePlace Suites Dallas Rockwall" data-roll data-zoom>
     </article>
 
     <article class="alt flip" id="hl-offering">
       <img src="assets/offering-room.webp" width="1600" height="1067" loading="lazy"
-           alt="King guestroom with glass-partition bath and lounge seating at SpringHill Suites Dallas Rockwall" data-roll>
+           alt="King guestroom with glass-partition bath and lounge seating at SpringHill Suites Dallas Rockwall" data-roll data-zoom>
       <div class="panel-white">
         <h3>Optimal Offering &ndash; Fee Simple, Non-Union, Unencumbered By Management</h3>
         <p>The Properties are offered fee simple and free and clear of existing management, affording new ownership maximum optionality in the future operation and capitalization of the Hotels, available for purchase individually or as a portfolio.</p>
@@ -1097,7 +1097,7 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
   if (!dlg || typeof dlg.showModal !== 'function') return;
   var big = dlg.querySelector('img'), cap = dlg.querySelector('.lightbox-cap');
   var closeBtn = dlg.querySelector('.lightbox-close');
-  var shots = [].slice.call(document.querySelectorAll('[data-roll]'));
+  var shots = [].slice.call(document.querySelectorAll('[data-zoom]'));
   if (!shots.length) return;
 
   function open(img) {
@@ -1119,6 +1119,9 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
   });
 
   closeBtn.addEventListener('click', function () { dlg.close(); });
+  /* belt-and-braces: the UA close-request already handles Esc, but keep an explicit
+     handler so the key works even where that signal never arrives */
+  dlg.addEventListener('keydown', function (e) { if (e.key === 'Escape') dlg.close(); });
   /* <dialog> has no backdrop-click behaviour of its own */
   dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
   dlg.addEventListener('close', function () { big.removeAttribute('src'); });
