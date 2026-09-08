@@ -258,6 +258,37 @@ Two things worth knowing:
 It falls back to `Poppins` rather than a system serif, so a failed webfont degrades to the
 surrounding type instead of clashing with it.
 
+## Hero scroll cue
+
+A hairline at the bottom of the hero with a light segment travelling down it — the same 1px
+motif as the masthead rules, rather than a bouncing chevron. It is a real `<a href="#overview">`,
+so it works by click and by keyboard and gets a focus ring; the animation stops under
+`prefers-reduced-motion` (the segment parks at the bottom of the track).
+
+## Click to enlarge
+
+The 16 scroll-parallax images (`[data-roll]`) get a **soft hover zoom** —
+`object-view-box: inset(4%)` over 550ms, which crops inside the element box so the image
+cannot grow past its frame — and open in a **native `<dialog>`** on click.
+
+`<dialog>` + `showModal()` was chosen over a hand-rolled overlay because it brings Esc-to-close,
+focus trapping and focus restore for free. Backdrop-click close is added by hand, since
+`<dialog>` has no such behaviour of its own. The `src` is cleared on close so the enlarged
+bitmap is not held in memory.
+
+The attributes that advertise the images as activatable (`role="button"`, `tabindex="0"`,
+`aria-label` = alt + " — enlarge", `cursor: zoom-in`) are applied **by the script**, so
+without JS they stay plain images rather than lying about being buttons.
+
+Verified: opens on click and on Enter, closes via the button and via backdrop click, image
+scales to fit (1286px wide at 1440, 353px at 375). Esc relies on the native dialog cancel
+behaviour, which synthetic `KeyboardEvent`s do not exercise — the dialog is confirmed a true
+modal (`:modal` matches), so it applies.
+
+The annotated aerial map and the DFW infographic are **not** included — they carry no
+`data-roll`. They would arguably benefit most from enlarging; add `data-roll` or a separate
+hook if wanted.
+
 ## Brand logo hover
 
 The 29 `assets/brands/` marks lift on hover — opacity `.88 → 1` and `scale(1.14)`, 250/300ms.

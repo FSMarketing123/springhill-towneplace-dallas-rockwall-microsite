@@ -101,6 +101,65 @@ p:last-child{margin-bottom:0}
 .hero-mast img{width:110px;height:auto;flex:none}
 .hero-lockup{position:relative;z-index:2;width:clamp(320px,52vw,1340px);padding:0 24px}
 
+/* ---------- hero scroll cue ----------
+   A hairline with a light segment travelling down it — same 1px motif as the masthead
+   rules. It is a real link to #overview so it works by click and by keyboard. */
+.scroll-cue{
+  position:absolute;left:50%;bottom:clamp(18px,2.6vw,40px);
+  transform:translateX(-50%);z-index:3;display:block;
+  padding:12px 18px;text-decoration:none;
+}
+.scroll-cue-track{
+  display:block;width:1px;height:clamp(32px,3.6vw,54px);
+  background:rgba(255,255,255,.28);position:relative;overflow:hidden;
+}
+.scroll-cue-run{
+  position:absolute;left:0;right:0;top:0;height:46%;
+  background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.95));
+  animation:scroll-cue 2.4s cubic-bezier(.6,0,.35,1) infinite;
+}
+@keyframes scroll-cue{
+  0%{transform:translateY(-105%);opacity:0}
+  20%{opacity:1}
+  62%{transform:translateY(232%);opacity:0}
+  100%{transform:translateY(232%);opacity:0}
+}
+.scroll-cue:focus-visible{outline:2px solid rgba(255,255,255,.85);outline-offset:6px;border-radius:2px}
+
+/* ---------- click to enlarge ----------
+   Soft hover zoom via object-view-box (crops inside the element box, so it cannot grow
+   past its frame), and a native <dialog> for the enlarged view. */
+@supports (object-view-box: inset(0%)){
+  @media (hover:hover){
+    [data-roll]{object-view-box:inset(0%);transition:object-view-box .55s cubic-bezier(.22,.85,.3,1)}
+    [data-roll]:hover{object-view-box:inset(4%)}
+  }
+}
+[data-roll].is-zoomable{cursor:zoom-in}
+.lightbox{
+  border:0;padding:0;margin:auto;background:transparent;
+  max-width:min(94vw,1680px);max-height:94vh;overflow:visible;
+}
+.lightbox::backdrop{background:rgba(24,34,44,.88)}
+.lightbox img{display:block;width:100%;height:auto;max-height:84vh;object-fit:contain;background:#1a2430}
+.lightbox-cap{
+  margin:14px 4px 0;color:rgba(255,255,255,.88);
+  font-size:13px;line-height:1.5;text-align:center;
+}
+.lightbox-close{
+  position:absolute;top:-14px;right:-14px;width:40px;height:40px;
+  display:grid;place-items:center;border:0;border-radius:50%;
+  background:#fff;color:var(--navy);font-size:22px;line-height:1;cursor:pointer;
+  box-shadow:0 2px 14px rgba(0,0,0,.35);
+}
+.lightbox-close:focus-visible{outline:2px solid #fff;outline-offset:3px}
+@media (max-width:600px){.lightbox-close{top:-8px;right:-8px;width:34px;height:34px;font-size:19px}}
+@media (prefers-reduced-motion:reduce){
+  .scroll-cue-run{animation:none;top:auto;bottom:0}
+  [data-roll]{transition:none}
+  [data-roll]:hover{object-view-box:inset(0%)}
+}
+
 /* ---------- overview ---------- */
 /* ---------- paper grounds ----------
    Two tiles: texture-paper.webp (paper.png, mean 239) and texture-paper-lighter.webp
@@ -468,6 +527,9 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
   <h1 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap">
     SpringHill Suites Dallas Rockwall and TownePlace Suites Dallas Rockwall
   </h1>
+  <a class="scroll-cue" href="#overview" aria-label="Scroll to the offering summary">
+    <span class="scroll-cue-track" aria-hidden="true"><span class="scroll-cue-run"></span></span>
+  </a>
 </header>
 
 <!-- ============ OVERVIEW ============ -->
@@ -1016,6 +1078,50 @@ footer{background-color:var(--footer);color:rgba(255,255,255,.88);padding-block:
     blocks.forEach(function (el) { ro.observe(el); });
   }
 
+})();
+</script>
+
+<dialog class="lightbox" aria-label="Enlarged image">
+  <button type="button" class="lightbox-close" aria-label="Close enlarged image">&times;</button>
+  <img alt="">
+  <p class="lightbox-cap"></p>
+</dialog>
+
+<script>
+/* Click any scroll-parallax image to open it in a native <dialog>. Using <dialog>
+   rather than a hand-rolled overlay buys Esc-to-close, focus trapping and focus
+   restore for free. Enhancement only: the attributes that advertise the images as
+   activatable are added here, so without this script they stay plain images. */
+(function () {
+  var dlg = document.querySelector('.lightbox');
+  if (!dlg || typeof dlg.showModal !== 'function') return;
+  var big = dlg.querySelector('img'), cap = dlg.querySelector('.lightbox-cap');
+  var closeBtn = dlg.querySelector('.lightbox-close');
+  var shots = [].slice.call(document.querySelectorAll('[data-roll]'));
+  if (!shots.length) return;
+
+  function open(img) {
+    big.src = img.currentSrc || img.src;
+    big.alt = img.alt || '';
+    cap.textContent = img.alt || '';
+    dlg.showModal();
+  }
+
+  shots.forEach(function (img) {
+    img.classList.add('is-zoomable');
+    img.setAttribute('role', 'button');
+    img.setAttribute('tabindex', '0');
+    img.setAttribute('aria-label', (img.alt || 'Image') + ' \u2014 enlarge');
+    img.addEventListener('click', function () { open(img); });
+    img.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(img); }
+    });
+  });
+
+  closeBtn.addEventListener('click', function () { dlg.close(); });
+  /* <dialog> has no backdrop-click behaviour of its own */
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+  dlg.addEventListener('close', function () { big.removeAttribute('src'); });
 })();
 </script>
 
