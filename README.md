@@ -204,6 +204,15 @@ of the container width, with the lockups right-aligned flush to the container's 
 `logo-shs-navy.svg` / `logo-tps-navy.svg` (fill `#314356`) because they sit on the light 232
 ground, not inside the panel.
 
+## #hl-basis composition
+
+`#hl-basis` uses `.alt-stack`, mirroring `#hl-growth`: a **full-width copy panel with the
+image beneath it**, on the same 8px gap the rest of the page's image grids use. It previously
+used `.alt` — a flush 50/50 copy-beside-image split with `gap: 0`.
+
+`#hl-offering`, directly below it, still uses `.alt`. Only `#hl-basis` was asked for, so the
+two blocks now read differently; add `.alt-stack` to that article and drop its `flip` to match.
+
 ## Property lockups link to the snapshot
 
 The two navy lockups in `.brand-marks` are anchors. Each targets **its own** card —
