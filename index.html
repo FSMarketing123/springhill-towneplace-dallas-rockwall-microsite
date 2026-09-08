@@ -266,15 +266,18 @@ table.spec tr:hover{background:rgba(255,255,255,.14)}
 .conc-bar-teal{background:var(--teal);width:var(--w);transition:background-color .25s ease}
 .conc-bar-base{background:#fff;width:47.8%}
 .conc-pct{
-  justify-self:end;color:var(--teal);font-weight:800;
-  font-size:clamp(22px,9.3cqw,66px);line-height:1;letter-spacing:-.02em;
+  justify-self:end;color:var(--teal);
+  /* Poltawski Nowy's weight axis stops at 700 (wght@800 is a 400 from the API), so the
+     extra weight comes from thickening the outline rather than a heavier face. */
+  font-family:'Poltawski Nowy','Poppins',sans-serif;font-weight:700;
+  -webkit-text-stroke:.04em currentColor;
+  font-size:clamp(22px,9.3cqw,66px);line-height:1;letter-spacing:-.012em;
   font-variant-numeric:tabular-nums;white-space:nowrap;
   transition:color .25s ease;
 }
-.conc-pct sup{font-size:.4em;font-weight:700;vertical-align:super;line-height:0}
-/* Poltawski Nowy is a serif; it falls back to Poppins rather than a system serif so a
-   failed webfont degrades to the surrounding type instead of clashing with it. */
-.conc-num{font-family:'Poltawski Nowy','Poppins',sans-serif;font-weight:700}
+.conc-pct sup{font-size:.4em;font-weight:700;vertical-align:super;line-height:0;
+  -webkit-text-stroke:.015em currentColor}  /* thin arms blob before the digits do */
+/* .conc-num inherits the family from .conc-pct — no separate declaration needed. */
 .conc-arrow{width:5.6cqw;height:auto;justify-self:end;fill:var(--teal);
   transition:fill .25s ease,transform .3s cubic-bezier(.34,1.4,.64,1)}
 .conc-foot{

@@ -233,16 +233,24 @@ left to the logo's alt text alone.
 
 ## Concentrations number face
 
-`.conc-num` — the percentage digits only — is set in **Poltawski Nowy 700**, loaded from
-Google Fonts alongside Poppins. The API family name has no diacritics
-(`family=Poltawski+Nowy:wght@700`); the accented spelling returns HTTP 400.
+The whole percentage figure — `.conc-pct`, which includes the digits, the `%` and the `*` —
+is set in **Poltawski Nowy 700**, loaded from Google Fonts alongside Poppins. `.conc-num`
+inherits it, so there is no separate declaration.
+
+Two things worth knowing:
+
+- The API family name has **no diacritics** (`family=Poltawski+Nowy:wght@700`); the accented
+  spelling returns HTTP 400.
+- **The weight axis stops at 700.** `wght@800` is a 400 from the API, and the metadata gives
+  the range as `wght 400–700`, so `font-weight: 800` (what this used to carry, in Poppins)
+  cannot buy a heavier face. The extra weight is `-webkit-text-stroke: .04em currentColor`,
+  which thickens the outline — 1.91px at the 1440 size, scaling with the font to 1.22px at
+  375. Stepping the ladder, `.055em` starts pinching the counters in `0` and `9`, so `.04em`
+  is about the ceiling. The `sup` asterisk gets a lighter `.015em` because its thin arms blob
+  before the digits do.
 
 It falls back to `Poppins` rather than a system serif, so a failed webfont degrades to the
 surrounding type instead of clashing with it.
-
-Note the `%` and the `*` sit **outside** `.conc-num`, in `.conc-pct`, so they stay in Poppins
-800 — the digits are serif and the percent sign is not. Move the declaration to `.conc-pct`
-if the whole figure should change.
 
 ## Brand logo hover
 
