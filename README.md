@@ -204,14 +204,15 @@ of the container width, with the lockups right-aligned flush to the container's 
 `logo-shs-navy.svg` / `logo-tps-navy.svg` (fill `#314356`) because they sit on the light 232
 ground, not inside the panel.
 
-## #hl-basis composition
+## #hl-basis / #hl-offering spacing
 
-`#hl-basis` uses `.alt-stack`, mirroring `#hl-growth`: a **full-width copy panel with the
-image beneath it**, on the same 8px gap the rest of the page's image grids use. It previously
-used `.alt` — a flush 50/50 copy-beside-image split with `gap: 0`.
+Both blocks keep their side-by-side copy-beside-image layout but sit on the **same 8px grid
+as `#hl-growth`** — `.alt{gap:8px}` and `.alt+.alt{margin-top:8px}`, matching `.dev-pair` and
+`.i30`. They previously used `gap: 0` (panel flush to image) with a
+`clamp(20px,2.4vw,34px)` row gap.
 
-`#hl-offering`, directly below it, still uses `.alt`. Only `#hl-basis` was asked for, so the
-two blocks now read differently; add `.alt-stack` to that article and drop its `flip` to match.
+At 1440 that reads as four equal 546×374 cells with uniform 8px gutters. The `flip` order on
+`#hl-offering` is unchanged, so it still leads with its image.
 
 ## Property lockups link to the snapshot
 
