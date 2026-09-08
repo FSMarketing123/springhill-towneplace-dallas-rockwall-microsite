@@ -204,6 +204,18 @@ of the container width, with the lockups right-aligned flush to the container's 
 `logo-shs-navy.svg` / `logo-tps-navy.svg` (fill `#314356`) because they sit on the light 232
 ground, not inside the panel.
 
+## Brand logo hover
+
+The 29 `assets/brands/` marks lift on hover — opacity `.88 → 1` and `scale(1.14)`, 250/300ms.
+Pure CSS, behind `@media (hover:hover)` so touch devices are skipped, and neutralised under
+`prefers-reduced-motion`.
+
+A transform scale is safe here where it was not on the photo grids: every brand SVG shares a
+uniform 1.5 canvas aspect from the Illustrator export, so each renders 93×62 at 1440 with a
+24px gap either side. A 1.14 scale grows the widest by ~6.5px per side — it cannot reach its
+neighbour. Confirmed by diffing a forced-hover render: only the hovered mark's own ink
+changes, the adjacent logos are pixel-identical.
+
 ## Parallax travel ceiling
 
 Both the scroll roller (82% → 18%, i.e. 64% of available slack) and the cursor parallax (12%)

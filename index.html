@@ -55,6 +55,8 @@ img{max-width:100%;height:auto;display:block}
   transition:transform 1.15s cubic-bezier(.22,.85,.3,1),opacity .85s ease;
 }
 @media (prefers-reduced-motion:reduce){
+  .brand-tier img{transition:none}
+  .brand-tier img:hover{transform:none}
   [data-px]{transform:none!important}
   [data-roll]{object-position:var(--px-x,50%) var(--py,50%)!important}
   .js-rise [data-rise],.js-rise [data-rise].risen{transform:none;opacity:1;transition:none}
@@ -371,7 +373,16 @@ table.spec tr:hover{background:rgba(255,255,255,.14)}
 .brand-tier{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;
   gap:clamp(14px,1.7vw,34px)}
 .brand-tier+.brand-tier{margin-top:clamp(22px,2.6vw,44px)}
-.brand-tier img{height:clamp(34px,4.3vw,68px);width:auto;opacity:.9}
+.brand-tier img{
+  height:clamp(34px,4.3vw,68px);width:auto;opacity:.88;
+  transition:opacity .25s ease,transform .3s cubic-bezier(.34,1.4,.64,1);
+}
+/* Every brand SVG shares a uniform 1.5 canvas from the Illustrator export, so each
+   renders 93x62 at 1440 with a 24px gap either side — a 1.14 scale grows the widest by
+   ~6.5px per side and cannot touch its neighbour. */
+@media (hover:hover){
+  .brand-tier img:hover{opacity:1;transform:scale(1.14)}
+}
 
 /* ---------- alternating cards ---------- */
 .alt{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch}
