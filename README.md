@@ -537,8 +537,13 @@ process from a permitted directory is not enough; it has to be handed a copy und
 rm -rf /tmp/rockwall-preview && mkdir -p /tmp/rockwall-preview
 (cd site && tar --exclude='.git' -cf - .) | (cd /tmp/rockwall-preview && tar -xf -)
 ```
-Then start the `rockwall-microsite` entry in `../../.claude/launch.json`, which serves
-`/tmp/rockwall-preview` on port 8943.
+Then start the **`springhill-towneplace-dallas-rockwall`** entry in
+`../../.claude/launch.json`, which serves `/tmp/rockwall-preview` on port 8943.
+
+That entry used to be called `rockwall-microsite`. It was renamed because the launch list also
+holds a `springhill-suites-jacksonville` entry (formerly `springhillsuites-site`) for an
+unrelated deal, and picking that one by name — it reads like this property — starts a server
+for the Jacksonville site instead. Every entry is now named after the property it serves.
 
 **The mirror is a snapshot, not a live view.** Re-run the copy after every edit or the preview
 shows stale markup — a mismatch that has cost real debugging time here, since a stale page
