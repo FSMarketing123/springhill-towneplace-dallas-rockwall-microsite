@@ -528,28 +528,34 @@ either way — neither effect can change an element's box.
 
 ## Local preview
 
-The dev server process cannot read `~/Downloads` **at all** — it is denied even `getcwd`, so
-every request 404s and the log opens with
-`shell-init: error retrieving current directory: Operation not permitted`. Starting the
-process from a permitted directory is not enough; it has to be handed a copy under `/tmp`.
+The dev server process cannot read `~/Downloads` **at all** — macOS TCC denies the sandboxed
+helper even `getcwd`, so every request 404s and the log opens with
+`shell-init: error retrieving current directory: Operation not permitted`. The docroot has to
+be mirrored outside it.
 
 ```
-rm -rf /tmp/rockwall-preview && mkdir -p /tmp/rockwall-preview
-(cd site && tar --exclude='.git' -cf - .) | (cd /tmp/rockwall-preview && tar -xf -)
+../../.claude/rockwall-sync.sh
 ```
-Then start the **`springhill-towneplace-dallas-rockwall`** entry in
-`../../.claude/launch.json`, which serves `/tmp/rockwall-preview` on port 8943.
+That copies the site to `/tmp/rockwall-preview` and writes `/tmp/rockwall-server.py`. Then
+start the **`springhill-towneplace-dallas-rockwall`** entry in `../../.claude/launch.json`,
+which runs that server on port 8943.
 
 That entry used to be called `rockwall-microsite`. It was renamed because the launch list also
 holds a `springhill-suites-jacksonville` entry (formerly `springhillsuites-site`) for an
 unrelated deal, and picking that one by name — it reads like this property — starts a server
 for the Jacksonville site instead. Every entry is now named after the property it serves.
 
-**The mirror is a snapshot, not a live view.** Re-run the copy after every edit or the preview
-shows stale markup — a mismatch that has cost real debugging time here, since a stale page
-looks exactly like a broken change. The sibling entries in that launch file follow the same
-pattern (`/tmp/courtyard-stl-preview`, `/tmp/springhillsuites-preview`, `/tmp/xx-tests-preview`,
-`/tmp/hhlp-preview`, `/tmp/aloft-preview`).
+Three things the sync script exists to handle, each of which has cost real debugging time:
+
+- **The mirror is a snapshot.** Re-run the script after every edit, and again after any
+  reboot — `/tmp` is cleared, and a stale or missing mirror looks exactly like a broken
+  change.
+- **`python3 -m http.server` sends no `Cache-Control`,** so browsers apply heuristic freshness
+  and keep painting stale HTML, CSS and images after a sync. The emitted server sends
+  `no-store`. A page cached before the switch still needs a one-off `?v=` on the URL.
+- **The server must be threaded.** `ThreadingHTTPServer`, not a plain `TCPServer`: this page
+  requests 68 images at once, and a single-threaded server queues them until the browser gives
+  up — six SVGs timed out that way before it was threaded, then all 68 loaded in 69ms.
 
 Two measurement traps worth knowing, both of which have produced false "broken image" reports:
 
@@ -558,4 +564,4 @@ Two measurement traps worth knowing, both of which have produced false "broken i
   `naturalWidth: 0` while serving 200 perfectly. To audit images, set `loading = 'eager'` on
   every one and await their load/error events rather than trusting a scroll walk.
 - **Background tabs.** A tab that is not fronted defers image loading entirely. Front the tab
-  before measuring anything about layout or loading.
+  before measuring anything about loading or layout.
