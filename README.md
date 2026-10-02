@@ -536,9 +536,15 @@ be mirrored outside it.
 ```
 ../../.claude/rockwall-sync.sh
 ```
-That copies the site to `/tmp/rockwall-preview` and writes `/tmp/rockwall-server.py`. Then
-start the **`springhill-towneplace-dallas-rockwall`** entry in `../../.claude/launch.json`,
-which runs that server on port 8943.
+That copies the site to `/var/tmp/rockwall-preview` and writes `/var/tmp/rockwall-server.py`.
+Then start the **`springhill-towneplace-dallas-rockwall`** entry in
+`../../.claude/launch.json`, which runs that server on port 8943.
+
+`/var/tmp`, not `/tmp`: macOS purges `/tmp` entries that have not been accessed for about
+three days, so the mirror silently disappeared while this deal sat idle — with the machine
+still up, which is why "reboot clears /tmp" was the wrong explanation. `/var/tmp` is not on
+that schedule and survives reboots; the sandboxed helper reads it fine. The other deals'
+scripts still use `/tmp` and will keep hitting this.
 
 That entry used to be called `rockwall-microsite`. It was renamed because the launch list also
 holds a `springhill-suites-jacksonville` entry (formerly `springhillsuites-site`) for an
@@ -547,9 +553,8 @@ for the Jacksonville site instead. Every entry is now named after the property i
 
 Three things the sync script exists to handle, each of which has cost real debugging time:
 
-- **The mirror is a snapshot.** Re-run the script after every edit, and again after any
-  reboot — `/tmp` is cleared, and a stale or missing mirror looks exactly like a broken
-  change.
+- **The mirror is a snapshot.** Re-run the script after every edit — a stale or missing
+  mirror looks exactly like a broken change.
 - **`python3 -m http.server` sends no `Cache-Control`,** so browsers apply heuristic freshness
   and keep painting stale HTML, CSS and images after a sync. The emitted server sends
   `no-store`. A page cached before the switch still needs a one-off `?v=` on the URL.
